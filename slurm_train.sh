@@ -37,9 +37,9 @@ echo "============================================"
 # Run from the code directory
 cd "$SLURM_SUBMIT_DIR"
 
-# Activate your environment if needed
-# source ~/.local/bin/env
-# Or conda/pip/venv activation here
+# Activate virtual environment
+module load python/3.11.0 cuda/12.4.0
+source ~/envs/cs1470/bin/activate
 
 # Run training or validation
 if [ "$TASK" = "train" ]; then
