@@ -45,8 +45,8 @@ cd "$SLURM_SUBMIT_DIR"
 VENV_DIR=~/envs/cs1470
 
 # Auto-detect Python module (prefer 3.11, fall back to available)
-PYTHON_MODULE=$(module spider python 2>&1 | grep -oP 'python/\S+' | sort -V | tail -1)
-CUDA_MODULE=$(module spider cuda 2>&1 | grep -oP 'cuda/\S+' | sort -V | tail -1)
+PYTHON_MODULE=python/3.11.11-5e66
+CUDA_MODULE=cuda/12.9.0-cinr
 
 echo "Loading modules: $PYTHON_MODULE  $CUDA_MODULE"
 module load "$PYTHON_MODULE" "$CUDA_MODULE"
@@ -62,7 +62,7 @@ source "$VENV_DIR/bin/activate"
 # Install packages if torch is missing
 if ! python -c "import torch" &>/dev/null; then
     echo "First-time setup: installing PyTorch..."
-    pip install --quiet torch torchvision --index-url https://download.pytorch.org/whl/cu124
+    pip install --quiet torch torchvision --index-url https://download.pytorch.org/whl/cu126
 fi
 
 # Install remaining packages if any are missing
