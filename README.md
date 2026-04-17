@@ -15,7 +15,8 @@ All runs use MambaVision-T trained from scratch on STL-10 on Brown University's 
 | 2 | 25k augmented | 110 | ~52% | Underfit — too few epochs for larger set |
 | 3 | 25k augmented | 155 | 63.1% | Added LR schedule tuning |
 | 4 | 25k augmented | 205 | 68.2% | Model still improving at end |
-| 5 | 25k augmented | 254 | **74.1%** | Best at epoch 254; EMA top-1 74.09% |
+| 5 | 25k augmented | 254 | 74.1% | Best at epoch 254; EMA top-1 74.09% |
+| 6 | 25k augmented | 304 | **76.0%** | Best at epoch 304; EMA top-1 76.03%; LR still decaying |
 
 ---
 

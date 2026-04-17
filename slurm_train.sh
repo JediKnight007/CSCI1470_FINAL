@@ -65,8 +65,9 @@ if [ "$TASK" = "train" ]; then
         --config MambaVision/configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
-        --data_len 25000 \
-        --epochs 300 \
+        --data_len 5000 \
+        --epochs 400 \
+        --resume "$SLURM_SUBMIT_DIR/../output/train/mambavision_tiny_1k/20260417-165016-mamba_vision_T-224/checkpoint-304.pth.tar" \
         --warmup-epochs 10 \
         --cooldown-epochs 5 \
         --min-lr 1e-5 \
