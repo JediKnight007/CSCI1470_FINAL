@@ -37,9 +37,48 @@ echo "============================================"
 # Run from the code directory
 cd "$SLURM_SUBMIT_DIR"
 
-# Activate virtual environment
-module load python/3.11.0 cuda/12.4.0
-source ~/envs/cs1470/bin/activate
+# ============================================================
+# Environment setup — auto-detects modules and installs deps
+# on first run. Safe to re-run; skips if already installed.
+# ============================================================
+
+VENV_DIR=~/envs/cs1470
+
+# Auto-detect Python module (prefer 3.11, fall back to available)
+PYTHON_MODULE=$(module spider python 2>&1 | grep -oP 'python/\S+' | sort -V | tail -1)
+CUDA_MODULE=$(module spider cuda 2>&1 | grep -oP 'cuda/\S+' | sort -V | tail -1)
+
+echo "Loading modules: $PYTHON_MODULE  $CUDA_MODULE"
+module load "$PYTHON_MODULE" "$CUDA_MODULE"
+
+# Create venv on first run
+if [ ! -d "$VENV_DIR" ]; then
+    echo "First-time setup: creating virtual environment at $VENV_DIR"
+    python -m venv "$VENV_DIR"
+fi
+
+source "$VENV_DIR/bin/activate"
+
+# Install packages if torch is missing
+if ! python -c "import torch" &>/dev/null; then
+    echo "First-time setup: installing PyTorch..."
+    pip install --quiet torch torchvision --index-url https://download.pytorch.org/whl/cu124
+fi
+
+# Install remaining packages if any are missing
+if ! python -c "import timm, tensorboardX, einops, transformers, PIL, mamba_ssm" &>/dev/null; then
+    echo "First-time setup: installing remaining dependencies..."
+    pip install --quiet \
+        mamba-ssm==2.2.4 \
+        timm==1.0.15 \
+        tensorboardX==2.6.2.2 \
+        einops==0.8.1 \
+        transformers==4.50.0 \
+        Pillow==11.1.0 \
+        requests==2.32.3
+fi
+
+echo "Environment ready."
 
 # Run training or validation
 if [ "$TASK" = "train" ]; then
