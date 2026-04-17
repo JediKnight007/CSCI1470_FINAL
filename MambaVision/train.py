@@ -741,6 +741,7 @@ def main():
                 loader_train.sampler.set_epoch(epoch)
 
             saver = saver if not args.no_saver else None
+            epoch_start = time.time()
             train_metrics = train_one_epoch(
                 epoch, model, loader_train, optimizer, train_loss_fn, args,
                 lr_scheduler=lr_scheduler, saver=saver, output_dir=output_dir,
@@ -788,6 +789,9 @@ def main():
                 # save proper checkpoint with eval metric
                 save_metric = None if eval_metrics is None else eval_metrics[eval_metric]
                 best_metric, best_epoch = saver.save_checkpoint(epoch, metric=save_metric)
+
+            epoch_time = time.time() - epoch_start
+            _logger.info(f'Epoch {epoch} complete in {epoch_time:.1f}s ({epoch_time/60:.1f} min)')
 
 
             if not np.isfinite(eval_metrics['loss']) or stopif:
