@@ -18,7 +18,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH -n 4
 #SBATCH --mem=16G
-#SBATCH -t 02:00:00
+#SBATCH -t 04:00:00
 #SBATCH -J stl10_train
 #SBATCH -o slurm-%j.out
 #SBATCH -e slurm-%j.err
@@ -66,8 +66,12 @@ if [ "$TASK" = "train" ]; then
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --data_len 25000 \
-        --epochs 100 \
-        --workers 4 2>&1
+        --epochs 150 \
+        --warmup-epochs 10 \
+        --cooldown-epochs 5 \
+        --min-lr 1e-5 \
+        --workers 4 \
+        --model-ema-decay 0.999 2>&1
 elif [ "$TASK" = "validate" ]; then
     python MambaVision/validate.py \
         --config MambaVision/configs/mambavision_tiny_1k.yaml \
