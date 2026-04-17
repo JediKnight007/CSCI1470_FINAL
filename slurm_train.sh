@@ -63,17 +63,13 @@ echo "Environment ready."
 if [ "$TASK" = "train" ]; then
     python MambaVision/train.py \
         --config MambaVision/configs/mambavision_tiny_1k.yaml \
-        --dataset torch/STL10 \
-        --data_dir "$SLURM_SUBMIT_DIR/STL-10" \
-        --train-split train \
-        --val-split test \
+        --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --data_len 5000
 elif [ "$TASK" = "validate" ]; then
     python MambaVision/validate.py \
         --config MambaVision/configs/mambavision_tiny_1k.yaml \
-        --dataset torch/STL10 \
-        --data_dir "$SLURM_SUBMIT_DIR/STL-10" \
+        --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10
 else
     echo "Unknown task: $TASK"
