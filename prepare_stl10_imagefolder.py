@@ -3,6 +3,10 @@ Convert STL-10 binary files into ImageFolder structure:
   STL-10/imagefolder/train/<class_name>/<idx>.png
   STL-10/imagefolder/test/<class_name>/<idx>.png
 
+Augments the training set 5x (5000 → 25000 images) using:
+  - horizontal flip
+  - 90/180/270 degree rotations
+
 Run once on the login node after download_stl10.py:
   python prepare_stl10_imagefolder.py
 """
@@ -33,28 +37,48 @@ def load_labels(path):
         return np.frombuffer(f.read(), dtype=np.uint8)
 
 
-def save_split(images, labels, split):
+def augment(img):
+    """Return 4 additional augmented versions of a PIL image."""
+    return [
+        img.transpose(Image.FLIP_LEFT_RIGHT),
+        img.rotate(90),
+        img.rotate(180),
+        img.rotate(270),
+    ]
+
+
+def save_split(images, labels, split, augment_train=False):
     for class_name in CLASS_NAMES:
         os.makedirs(os.path.join(OUT_DIR, split, class_name), exist_ok=True)
 
+    count = 0
     for idx, (img_arr, label) in enumerate(zip(images, labels)):
         class_name = CLASS_NAMES[label - 1]  # labels are 1-indexed
-        out_path = os.path.join(OUT_DIR, split, class_name, f"{idx:05d}.png")
-        Image.fromarray(img_arr).save(out_path)
+        img = Image.fromarray(img_arr).resize((256, 256), Image.BICUBIC)
 
-    print(f"  Saved {len(images)} images to {OUT_DIR}/{split}/")
+        # Save original
+        img.save(os.path.join(OUT_DIR, split, class_name, f"{idx:05d}_orig.png"))
+        count += 1
+
+        # Save augmented copies for training set only
+        if augment_train:
+            for aug_idx, aug_img in enumerate(augment(img)):
+                aug_img.save(os.path.join(OUT_DIR, split, class_name, f"{idx:05d}_aug{aug_idx}.png"))
+                count += 1
+
+    print(f"  Saved {count} images to {OUT_DIR}/{split}/")
 
 
 print("Converting STL-10 to ImageFolder format...")
 
-print("Processing train split...")
+print("Processing train split (5x augmentation → 25,000 images)...")
 train_images = load_images(os.path.join(STL10_DIR, "train_X.bin"))
 train_labels = load_labels(os.path.join(STL10_DIR, "train_y.bin"))
-save_split(train_images, train_labels, "train")
+save_split(train_images, train_labels, "train", augment_train=True)
 
-print("Processing test split...")
+print("Processing test split (no augmentation)...")
 test_images = load_images(os.path.join(STL10_DIR, "test_X.bin"))
 test_labels = load_labels(os.path.join(STL10_DIR, "test_y.bin"))
-save_split(test_images, test_labels, "val")
+save_split(test_images, test_labels, "val", augment_train=False)
 
 print(f"Done. ImageFolder dataset ready at: {OUT_DIR}")
