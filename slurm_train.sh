@@ -51,6 +51,9 @@ CUDA_MODULE=cuda/12.9.0-cinr
 echo "Loading modules: $PYTHON_MODULE  $CUDA_MODULE"
 module load "$PYTHON_MODULE" "$CUDA_MODULE"
 
+# Load cuDNN if available (needed for mamba-ssm compilation)
+module load cudnn 2>/dev/null && echo "cuDNN loaded" || echo "cuDNN not found as separate module, continuing..."
+
 # Create venv on first run
 if [ ! -d "$VENV_DIR" ]; then
     echo "First-time setup: creating virtual environment at $VENV_DIR"
@@ -76,6 +79,25 @@ if ! python -c "import timm, tensorboardX, einops, transformers, PIL, mamba_ssm"
         transformers==4.50.0 \
         Pillow==11.1.0 \
         requests==2.32.3
+fi
+
+# Patch torch._utils to restore _accumulate removed in PyTorch 2.0
+# This avoids modifying upstream MambaVision source files
+SITE_PACKAGES=$(python -c "import site; print(site.getsitepackages()[0])")
+PATCHFILE="$SITE_PACKAGES/torch_accumulate_compat.py"
+PTHFILE="$SITE_PACKAGES/torch_accumulate_compat.pth"
+if [ ! -f "$PTHFILE" ]; then
+    echo "Applying torch._utils._accumulate compatibility patch..."
+    cat > "$PATCHFILE" << 'EOF'
+try:
+    import itertools
+    import torch._utils
+    if not hasattr(torch._utils, '_accumulate'):
+        torch._utils._accumulate = itertools.accumulate
+except Exception:
+    pass
+EOF
+    echo "import torch_accumulate_compat" > "$PTHFILE"
 fi
 
 echo "Environment ready."
