@@ -75,6 +75,21 @@ tail -f slurm-<jobid>.out    # live training output
 tail -f slurm-<jobid>.err    # errors (timm also logs here)
 ```
 
+### Resuming from a checkpoint
+To continue training from a previous run's best checkpoint, add `--resume` to the `train.py` call in `slurm_train.sh`:
+```bash
+        --resume "$SLURM_SUBMIT_DIR/../output/train/mambavision_tiny_1k/<run-dir>/checkpoint-<epoch>.pth.tar" \
+```
+Checkpoints are saved to `../output/train/mambavision_tiny_1k/` relative to where `train.py` is run (i.e., one level above `CS1470FINAL/`). Each run creates a timestamped subdirectory like `20260417-165016-mamba_vision_T-224/`. You can list available runs with:
+```bash
+ls ~/output/train/mambavision_tiny_1k/
+```
+The best checkpoint filename and its accuracy are printed at the end of each epoch as `Current checkpoints:` in the training log.
+
+Timm reads the saved epoch number from the checkpoint and resumes from the next epoch automatically — no need to set `--start-epoch`. The optimizer state and EMA weights are also restored.
+
+To start a **fresh run** instead, remove the `--resume` line entirely.
+
 ### Validation only
 ```bash
 sbatch slurm_train.sh validate
