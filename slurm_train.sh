@@ -54,13 +54,28 @@ module load "$PYTHON_MODULE" "$CUDA_MODULE"
 # Load cuDNN if available (needed for mamba-ssm compilation)
 module load cudnn 2>/dev/null && echo "cuDNN loaded" || echo "cuDNN not found as separate module, continuing..."
 
-# Create venv on first run
+# Recreate venv if it was built with the wrong Python version
+EXPECTED_PY="3.11"
+if [ -d "$VENV_DIR" ]; then
+    VENV_PY=$("$VENV_DIR/bin/python" --version 2>&1 | grep -oP '3\.\d+')
+    if [[ "$VENV_PY" != "$EXPECTED_PY"* ]]; then
+        echo "Detected wrong Python version in venv ($VENV_PY), recreating..."
+        rm -rf "$VENV_DIR"
+    fi
+fi
+
 if [ ! -d "$VENV_DIR" ]; then
     echo "First-time setup: creating virtual environment at $VENV_DIR"
     python -m venv "$VENV_DIR"
 fi
 
 source "$VENV_DIR/bin/activate"
+
+# Upgrade pip to avoid old build tooling issues
+pip install --quiet --upgrade pip setuptools wheel
+
+# Expose CUDA libs so pip build isolation can find them
+export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
 
 # Install packages if torch is missing
 if ! python -c "import torch" &>/dev/null; then
@@ -72,13 +87,15 @@ fi
 if ! python -c "import timm, tensorboardX, einops, transformers, PIL, mamba_ssm" &>/dev/null; then
     echo "First-time setup: installing remaining dependencies..."
     pip install --quiet \
-        mamba-ssm==2.2.4 \
         timm==1.0.15 \
         tensorboardX==2.6.2.2 \
         einops==0.8.1 \
         transformers==4.50.0 \
         Pillow==11.1.0 \
         requests==2.32.3
+    # mamba-ssm requires CUDA libs at build time; --no-build-isolation
+    # makes pip use the already-installed torch instead of an isolated env
+    pip install --quiet --no-build-isolation mamba-ssm==2.2.4
 fi
 
 # Patch torch._utils to restore _accumulate removed in PyTorch 2.0
