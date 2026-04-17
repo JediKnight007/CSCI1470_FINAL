@@ -93,9 +93,10 @@ if ! python -c "import timm, tensorboardX, einops, transformers, PIL, mamba_ssm"
         transformers==4.50.0 \
         Pillow==11.1.0 \
         requests==2.32.3
-    # mamba-ssm requires CUDA libs at build time; --no-build-isolation
-    # makes pip use the already-installed torch instead of an isolated env
-    pip install --quiet --no-build-isolation mamba-ssm==2.2.4
+    # mamba-ssm PyPI sdist is missing C++ source files; install from GitHub
+    # --no-build-isolation lets it use the already-installed torch/CUDA
+    pip install --quiet --no-build-isolation \
+        "git+https://github.com/state-spaces/mamba.git@v2.2.4"
 fi
 
 # Patch torch._utils to restore _accumulate removed in PyTorch 2.0
