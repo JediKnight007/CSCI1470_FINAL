@@ -117,6 +117,29 @@ Training is controlled entirely via command-line args in `slurm_train.sh` — no
 
 ---
 
+## Recent Upgrades & Fixes (Spring 2026)
+
+- **Learning Rate Schedule Bug Fixed:**
+  - `--data_len` was set to 25000, but only 5000 images were used per epoch. Fixed by setting `--data_len 5000`, so the cosine LR schedule decays at the correct rate.
+- **Longer Training:**
+  - Increased `--epochs` to 500 for full convergence. Model now reaches LR floor and accuracy plateaus.
+- **Augmentation Tuning:**
+  - Reduced `--mixup` to 0.4 and `--cutmix` to 0.5 for better convergence on small data.
+- **Weight Decay Stability:**
+  - Kept `--weight-decay 0.05` (LAMB optimizer unstable with lower values).
+- **Test-Time Augmentation:**
+  - Added `--tta 3` to validation for a small accuracy boost.
+- **Per-Epoch Timing:**
+  - Each epoch now logs its runtime in seconds and minutes.
+- **Accuracy Summary:**
+  - At the end of training, the script prints top-1 accuracy every 25 epochs for easy progress tracking.
+- **Resume Logic:**
+  - Documented how to resume from checkpoints and how to start a clean run.
+- **Best Result:**
+  - With all fixes, MambaVision-T achieves **80.7% top-1** on STL-10 from scratch.
+
+---
+
 ## Struggles & Limitations
 
 ### Environment issues
