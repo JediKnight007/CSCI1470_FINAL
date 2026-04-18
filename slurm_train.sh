@@ -66,10 +66,14 @@ if [ "$TASK" = "train" ]; then
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --data_len 5000 \
-        --epochs 400 \
+        --epochs 500 \
         --warmup-epochs 10 \
         --cooldown-epochs 5 \
         --min-lr 1e-5 \
+        --lr 0.006 \
+        --weight-decay 0.01 \
+        --mixup 0.4 \
+        --cutmix 0.5 \
         --workers 4 \
         --model-ema-decay 0.999 2>&1
 elif [ "$TASK" = "validate" ]; then
