@@ -48,6 +48,19 @@ def augment(img):
 
 
 def save_split(images, labels, split, augment_train=False):
+
+    # Clear split directory before saving (prevents duplicates)
+    split_dir = os.path.join(OUT_DIR, split)
+    if os.path.exists(split_dir):
+        # Remove all files and subdirectories
+        for class_name in os.listdir(split_dir):
+            class_path = os.path.join(split_dir, class_name)
+            if os.path.isdir(class_path):
+                for fname in os.listdir(class_path):
+                    os.remove(os.path.join(class_path, fname))
+    else:
+        os.makedirs(split_dir, exist_ok=True)
+
     for class_name in CLASS_NAMES:
         os.makedirs(os.path.join(OUT_DIR, split, class_name), exist_ok=True)
 

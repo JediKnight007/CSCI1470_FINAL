@@ -1,3 +1,37 @@
+---
+
+## ViT Baseline: Data Preparation & Fair Comparison
+
+### STL-10 ImageFolder Augmentation (No Duplicates)
+
+To ensure a fair comparison between MambaVision and ViT baselines, we:
+
+1. **Convert STL-10 to ImageFolder:**
+  - Run `python prepare_stl10_imagefolder.py` to convert the STL-10 binary files to ImageFolder format.
+  - The script applies 4 augmentations (horizontal flip, 90°/180°/270° rotation) to each original image, producing 5 images per original (5,000 × 5 = 25,000 images).
+  - **Duplicate Prevention:** The script now clears the output train directory before saving, ensuring no duplicate images are present, even if rerun.
+
+2. **Verify Dataset Size:**
+  - After running the script, each class folder in `STL-10/imagefolder/train/` should contain exactly 2,500 images (for 25,000 total).
+  - Check with:
+    ```bash
+    cd STL-10/imagefolder/train
+    for d in */; do echo "$d: $(ls "$d" | wc -l)"; done
+    ```
+
+3. **Set Data Path in Training Scripts:**
+  - Both MambaVision and ViT training scripts must use the same train directory: `/absolute/path/to/STL-10/imagefolder/train`.
+  - This guarantees both models see the same data and augmentation.
+
+4. **Retrain for Fair Comparison:**
+  - After confirming the dataset, retrain both models. Results are only comparable if the data pipeline is identical.
+
+**Note:** If you see more than 2,500 images per class (e.g., 3,000), clear the train directory and rerun the augmentation script to avoid duplicates.
+
+---
+---
+
+
 # Ube Macchiatos: MambaVision Replication Project
 
 ## Project Overview
