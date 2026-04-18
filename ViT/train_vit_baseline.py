@@ -66,6 +66,15 @@ def main():
         transform=val_transform
     )
 
+    # Print dataset sizes and class balance
+    print(f"Train images: {len(train_dataset)}")
+    print(f"Val images: {len(val_dataset)}")
+    from collections import Counter
+    train_labels = [label for _, label in train_dataset.samples]
+    val_labels = [label for _, label in val_dataset.samples]
+    print("Train class counts:", Counter(train_labels))
+    print("Val class counts:", Counter(val_labels))
+
     train_loader = DataLoader(
         train_dataset, batch_size=args.batch_size,
         shuffle=True, num_workers=4, pin_memory=True
