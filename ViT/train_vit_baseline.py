@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 import argparse
 import time
+import os
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -18,6 +19,9 @@ def get_args():
 
 def main():
     args = get_args()
+
+    # Ensure output directory exists
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
 
     # --- Model ---
     # vit_tiny_patch16_224 is the standard ViT-T
