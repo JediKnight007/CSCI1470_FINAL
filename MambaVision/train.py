@@ -819,6 +819,15 @@ def main():
     if best_metric is not None:
         _logger.info('*** Best metric: {0} (epoch {1})'.format(best_metric, best_epoch))
 
+    # Print top-1 accuracy every 25 epochs
+    if len(test_acc_track) > 0:
+        print("\nTop-1 accuracy every 25 epochs:")
+        for i in range(0, len(test_acc_track), 25):
+            print(f"Epoch {i:3d}: {test_acc_track[i]:.2f}%")
+        # Always print the last epoch
+        if (len(test_acc_track) - 1) % 25 != 0:
+            print(f"Epoch {len(test_acc_track)-1:3d}: {test_acc_track[-1]:.2f}%")
+
 
 def train_one_epoch(
         epoch, model, loader, optimizer, loss_fn, args,
