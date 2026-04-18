@@ -10,12 +10,13 @@ import os
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data-dir', default='./data/stl10')
-    parser.add_argument('--epochs', type=int, default=300)
-    parser.add_argument('--batch-size', type=int, default=128)
-    parser.add_argument('--lr', type=float, default=1e-3)
+    parser.add_argument('--data-dir', default='STL-10/imagefolder', help='Path to STL-10 ImageFolder root')
+    parser.add_argument('--epochs', type=int, default=500)
+    parser.add_argument('--batch-size', type=int, default=256)
+    parser.add_argument('--lr', type=float, default=5e-4)  # Lowered LR
     parser.add_argument('--output', default='./output/vit_baseline')
     parser.add_argument('--num-classes', type=int, default=10)
+    parser.add_argument('--pretrained', action='store_true', help='Use ImageNet pretrained weights')
     return parser.parse_args()
 
 def main():
@@ -29,8 +30,9 @@ def main():
     # pretrained=False to match your MambaVision from-scratch setup
     model = timm.create_model(
         'vit_tiny_patch16_224',
-        pretrained=False,
-        num_classes=args.num_classes
+        pretrained=args.pretrained,
+        num_classes=args.num_classes,
+        drop_path_rate=0.2
     )
     model = model.cuda()
 
@@ -91,7 +93,14 @@ def main():
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, T_max=args.epochs
     )
-    criterion = nn.CrossEntropyLoss()
+    # Label smoothing
+    criterion = nn.CrossEntropyLoss(label_smoothing=0.1, reduction='none')
+
+    # Mixup/CutMix
+    from timm.data import Mixup
+    mixup_fn = Mixup(
+        mixup_alpha=0.4, cutmix_alpha=0.5, label_smoothing=0.1, num_classes=args.num_classes
+    )
     scaler = torch.cuda.amp.GradScaler()  # fp16 training
 
     best_acc = 0.0
@@ -102,9 +111,12 @@ def main():
         for imgs, labels in train_loader:
             imgs, labels = imgs.cuda(), labels.cuda()
             optimizer.zero_grad()
+            # Apply Mixup/CutMix
+            imgs, labels = mixup_fn(imgs, labels)
             with torch.cuda.amp.autocast():
                 outputs = model(imgs)
                 loss = criterion(outputs, labels)
+                loss = loss.mean()  # reduction='none' for mixup
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
