@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
+from torchvision.datasets import ImageFolder
 import argparse
 import time
 import os
@@ -55,13 +56,14 @@ def main():
         )
     ])
 
-    train_dataset = datasets.STL10(
-        args.data_dir, split='train',
-        transform=train_transform, download=True
+    # Use ImageFolder to match MambaVision pipeline
+    train_dataset = ImageFolder(
+        root=os.path.join(args.data_dir, 'train'),
+        transform=train_transform
     )
-    val_dataset = datasets.STL10(
-        args.data_dir, split='test',
-        transform=val_transform, download=True
+    val_dataset = ImageFolder(
+        root=os.path.join(args.data_dir, 'val'),
+        transform=val_transform
     )
 
     train_loader = DataLoader(
