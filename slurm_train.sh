@@ -71,7 +71,7 @@ if [ "$TASK" = "train" ]; then
         --cooldown-epochs 5 \
         --min-lr 1e-5 \
         --lr 0.005 \
-        --weight-decay 0.01 \
+        --weight-decay 0.05 \
         --mixup 0.4 \
         --cutmix 0.5 \
         --workers 4 \
