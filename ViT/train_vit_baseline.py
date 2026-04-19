@@ -133,6 +133,7 @@ def main():
 
     best_acc = 0.0
 
+
     for epoch in range(args.epochs):
         # --- Train ---
         model.train()
@@ -171,6 +172,11 @@ def main():
             best_acc = acc
             torch.save(model.state_dict(), f"{args.output}_best.pth")
             print(f"  New best: {best_acc:.2f}%")
+
+        # Print elapsed wall-clock time every 10 epochs
+        if (epoch + 1) % 10 == 0:
+            elapsed = time.time() - wall_start
+            print(f"[Timer] Elapsed time after {epoch+1} epochs: {elapsed:.2f} seconds")
 
     print(f"\nFinal best accuracy: {best_acc:.2f}%")
 
