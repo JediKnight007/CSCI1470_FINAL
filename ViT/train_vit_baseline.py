@@ -26,6 +26,9 @@ def main():
 
     args = get_args()
 
+    # Start wall-clock timer
+    wall_start = time.time()
+
     # --- Model ---
     model = timm.create_model(
         args.model,
@@ -171,6 +174,11 @@ def main():
             print(f"  New best: {best_acc:.2f}%")
 
     print(f"\nFinal best accuracy: {best_acc:.2f}%")
+
+    # Print wall-clock training time
+    wall_end = time.time()
+    elapsed = wall_end - wall_start
+    print(f"Total training time: {elapsed:.2f} seconds")
 
 if __name__ == '__main__':
     main()
