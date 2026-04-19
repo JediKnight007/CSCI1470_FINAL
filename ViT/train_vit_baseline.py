@@ -9,8 +9,8 @@ import time
 import os
 
 def get_args():
-        parser.add_argument('--measure-throughput', action='store_true', help='Measure model throughput only and exit')
     parser = argparse.ArgumentParser()
+    parser.add_argument('--measure-throughput', action='store_true', help='Measure model throughput only and exit')
     parser.add_argument('--data-dir', default='STL-10/imagefolder', help='Path to STL-10 ImageFolder root')
     parser.add_argument('--epochs', type=int, default=500)
     parser.add_argument('--batch-size', type=int, default=256)
@@ -23,35 +23,10 @@ def get_args():
     return parser.parse_args()
 
 def main():
-        if args.measure_throughput:
-            import time
-            model.eval()
-            batch_size = args.batch_size
-            n_warmup = 50
-            n_runs = 300
-            x = torch.randn(batch_size, 3, 224, 224).cuda()
-            with torch.no_grad():
-                for _ in range(n_warmup):
-                    _ = model(x)
-            torch.cuda.synchronize()
-            start = time.perf_counter()
-            with torch.no_grad():
-                for _ in range(n_runs):
-                    _ = model(x)
-            torch.cuda.synchronize()
-            elapsed = time.perf_counter() - start
-            throughput = (n_runs * batch_size) / elapsed
-            params = sum(p.numel() for p in model.parameters()) / 1e6
-            print(f"{args.model}: {params:.1f}M params, {throughput:.1f} img/s")
-            return
+
     args = get_args()
 
-    # Ensure output directory exists
-    os.makedirs(os.path.dirname(args.output), exist_ok=True)
-
     # --- Model ---
-    # vit_tiny_patch16_224 is the standard ViT-T
-    # pretrained=False to match your MambaVision from-scratch setup
     model = timm.create_model(
         args.model,
         pretrained=args.pretrained,
@@ -59,6 +34,33 @@ def main():
         drop_path_rate=0.2
     )
     model = model.cuda()
+
+    if args.measure_throughput:
+        import time
+        model.eval()
+        batch_size = args.batch_size
+        n_warmup = 50
+        n_runs = 300
+        x = torch.randn(batch_size, 3, 224, 224).cuda()
+        with torch.no_grad():
+            for _ in range(n_warmup):
+                _ = model(x)
+        torch.cuda.synchronize()
+        start = time.perf_counter()
+        with torch.no_grad():
+            for _ in range(n_runs):
+                _ = model(x)
+        torch.cuda.synchronize()
+        elapsed = time.perf_counter() - start
+        throughput = (n_runs * batch_size) / elapsed
+        params = sum(p.numel() for p in model.parameters()) / 1e6
+        print(f"{args.model}: {params:.1f}M params, {throughput:.1f} img/s")
+        return
+
+    # Ensure output directory exists
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+
+
 
     # --- Data (identical transforms to your MambaVision run) ---
     train_transform = transforms.Compose([
