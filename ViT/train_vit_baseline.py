@@ -12,7 +12,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--measure-throughput', action='store_true', help='Measure model throughput only and exit')
     parser.add_argument('--data-dir', default='STL-10/imagefolder', help='Path to STL-10 ImageFolder root')
-    parser.add_argument('--epochs', type=int, default=500)
+    parser.add_argument('--epochs', type=int, default=350)
     parser.add_argument('--batch-size', type=int, default=256)
     parser.add_argument('--lr', type=float, default=5e-4)  # Lowered LR
     parser.add_argument('--output', default='./output/vit_baseline')

@@ -34,7 +34,7 @@ export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
 
 echo "Environment ready."
 
-python ViT/train_vit_baseline.py --model vit_tiny_patch16_224
+python ViT/train_vit_baseline.py --model vit_tiny_patch16_224 --epochs 400
 
 echo "============================================"
 echo "Finished:  $(date)"
@@ -48,4 +48,4 @@ echo "============================================"
 
 source ~/.bashrc
 conda activate cs1470
-python ViT/train_vit_baseline.py --model vit_tiny_patch16_224
+python ViT/train_vit_baseline.py --model vit_tiny_patch16_224 --epochs 400

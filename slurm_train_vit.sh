@@ -17,7 +17,7 @@ export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
 
 python ViT/train_vit_baseline.py \
   --data-dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
-  --epochs 500 \
+  --epochs 400 \
   --batch-size 128 \
   --lr 0.005 \
   --num-classes 10 \
