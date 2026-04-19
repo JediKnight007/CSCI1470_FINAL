@@ -39,7 +39,6 @@ def main():
     model = model.cuda()
 
     if args.measure_throughput:
-        import time
         model.eval()
         batch_size = args.batch_size
         n_warmup = 50
