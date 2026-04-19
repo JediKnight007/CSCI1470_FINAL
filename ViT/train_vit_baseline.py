@@ -9,6 +9,7 @@ import time
 import os
 
 def get_args():
+        parser.add_argument('--measure-throughput', action='store_true', help='Measure model throughput only and exit')
     parser = argparse.ArgumentParser()
     parser.add_argument('--data-dir', default='STL-10/imagefolder', help='Path to STL-10 ImageFolder root')
     parser.add_argument('--epochs', type=int, default=500)
@@ -17,9 +18,32 @@ def get_args():
     parser.add_argument('--output', default='./output/vit_baseline')
     parser.add_argument('--num-classes', type=int, default=10)
     parser.add_argument('--pretrained', action='store_true', help='Use ImageNet pretrained weights')
+    parser.add_argument('--model', default='vit_tiny_patch16_224',
+                        help='ViT model name (e.g., vit_tiny_patch16_224, vit_small_patch16_224, vit_base_patch16_224)')
     return parser.parse_args()
 
 def main():
+        if args.measure_throughput:
+            import time
+            model.eval()
+            batch_size = args.batch_size
+            n_warmup = 50
+            n_runs = 300
+            x = torch.randn(batch_size, 3, 224, 224).cuda()
+            with torch.no_grad():
+                for _ in range(n_warmup):
+                    _ = model(x)
+            torch.cuda.synchronize()
+            start = time.perf_counter()
+            with torch.no_grad():
+                for _ in range(n_runs):
+                    _ = model(x)
+            torch.cuda.synchronize()
+            elapsed = time.perf_counter() - start
+            throughput = (n_runs * batch_size) / elapsed
+            params = sum(p.numel() for p in model.parameters()) / 1e6
+            print(f"{args.model}: {params:.1f}M params, {throughput:.1f} img/s")
+            return
     args = get_args()
 
     # Ensure output directory exists
@@ -29,7 +53,7 @@ def main():
     # vit_tiny_patch16_224 is the standard ViT-T
     # pretrained=False to match your MambaVision from-scratch setup
     model = timm.create_model(
-        'vit_tiny_patch16_224',
+        args.model,
         pretrained=args.pretrained,
         num_classes=args.num_classes,
         drop_path_rate=0.2
