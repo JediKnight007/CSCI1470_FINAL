@@ -3,7 +3,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH -n 4
 #SBATCH --mem=16G
-#SBATCH -t 02:00:00
+#SBATCH -t 04:00:00
 #SBATCH -J vit_tiny
 #SBATCH -o slurm-%j.out
 #SBATCH -e slurm-%j.err
