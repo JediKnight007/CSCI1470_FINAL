@@ -65,7 +65,7 @@ if [ "$TASK" = "train" ]; then
         --config MambaVision/configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
-        --data_len 5000 \
+        --data_len 25000 \
         --epochs 400 \
         --warmup-epochs 10 \
         --cooldown-epochs 5 \
