@@ -10,16 +10,16 @@
 
 import torch
 import torch.nn as nn
-from timm.models.registry import register_model
+from timm.models import register_model
 import math
-from timm.models.layers import trunc_normal_, DropPath
+from timm.layers import trunc_normal_, DropPath
 from timm.models._builder import resolve_pretrained_cfg
 try:
     from timm.models._builder import _update_default_kwargs as update_args
 except:
     from timm.models._builder import _update_default_model_kwargs as update_args
 from timm.models.vision_transformer import Mlp, PatchEmbed
-from timm.models.layers import DropPath, trunc_normal_
+from timm.layers import DropPath, trunc_normal_
 from timm.models.registry import register_model
 import torch.nn.functional as F
 from mamba_ssm.ops.selective_scan_interface import selective_scan_fn

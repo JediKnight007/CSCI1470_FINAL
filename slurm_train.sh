@@ -76,8 +76,8 @@ if [ "$TASK" = "train" ]; then
         --cutmix 0.5 \
         --workers 4 \
         --model-ema-decay 0.999 \
-        --clip-grad 1.0 \        
-        --amp \                  
+        --clip-grad 1.0 \
+        --amp \
         --dtype bfloat16 \
         2>&1
 elif [ "$TASK" = "validate" ]; then
