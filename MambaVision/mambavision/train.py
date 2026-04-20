@@ -493,7 +493,7 @@ def main():
         if args.local_rank == 0:
             _logger.info('Using NVIDIA APEX AMP. Training in mixed precision.')
     elif use_amp == 'native':
-        amp_autocast = torch.cuda.amp.autocast
+        amp_autocast = lambda *a, **kw: torch.amp.autocast('cuda', *a, **kw)
         loss_scaler = NativeScaler()
         if args.local_rank == 0:
             _logger.info('Using native Torch AMP. Training in mixed precision.')
@@ -886,6 +886,9 @@ def train_one_epoch(
             if args.ampere_sparsity:
                 model.enforce_mask(grad=True)
 
+            if not torch.isfinite(loss):
+                print(f"Non-finite loss detected at step {step}, exiting! Loss: {loss}")
+                exit(1)
             loss.backward(create_graph=second_order)
             if args.clip_grad is not None:
                 utils.dispatch_clip_grad(
