@@ -75,7 +75,11 @@ if [ "$TASK" = "train" ]; then
         --mixup 0.4 \
         --cutmix 0.5 \
         --workers 4 \
-        --model-ema-decay 0.999 2>&1
+        --model-ema-decay 0.999 \
+        --clip-grad 1.0 \        
+        --amp \                  
+        --dtype bfloat16 \
+        2>&1
 elif [ "$TASK" = "validate" ]; then
     python MambaVision/validate.py \
         --config MambaVision/configs/mambavision_tiny_1k.yaml \
