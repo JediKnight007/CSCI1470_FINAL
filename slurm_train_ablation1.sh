@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # ============================================================
-# STL-10 Training - Slurm Job Script
+# STL-10 Training - Slurm Job Script (Ablation 1)
 # Compatible with Oscar/Slurm clusters
 #
 # Usage:
-#   sbatch slurm_train.sh train         # runs training
-#   sbatch slurm_train.sh validate      # runs validation
+#   sbatch slurm_train_ablation1.sh train         # runs training
+#   sbatch slurm_train_ablation1.sh validate      # runs validation
 #
 # Monitor your job:
 #   myq                      # check job status
@@ -61,8 +61,8 @@ echo "Environment ready."
 
 # Run training or validation
 if [ "$TASK" = "train" ]; then
-    python MambaVision/train.py \
-        --config MambaVision/configs/mambavision_tiny_1k.yaml \
+    python Mambavision_Ablation_1/train.py \
+        --config Mambavision_Ablation_1/configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --data_len 25000 \
@@ -77,11 +77,10 @@ if [ "$TASK" = "train" ]; then
         --workers 4 \
         --model-ema-decay 0.999 \
         --clip-grad 1.0 \
-
         > slurm-$SLURM_JOB_ID.out 2>&1
 elif [ "$TASK" = "validate" ]; then
-    python MambaVision/validate.py \
-        --config MambaVision/configs/mambavision_tiny_1k.yaml \
+    python Mambavision_Ablation_1/validate.py \
+        --config Mambavision_Ablation_1/configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --tta 3 > slurm-$SLURM_JOB_ID.out 2>&1
