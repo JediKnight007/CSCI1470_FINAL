@@ -69,15 +69,15 @@ if [ "$TASK" = "train" ]; then
         --epochs 400 \
         --warmup-epochs 10 \
         --cooldown-epochs 5 \
-        --min-lr 1e-5 \
-        --lr 0.005 \
+        --min-lr 1e-6 \
+        --lr 0.001 \
         --weight-decay 0.05 \
         --mixup 0.4 \
         --cutmix 0.5 \
         --workers 4 \
         --model-ema-decay 0.999 \
         --clip-grad 1.0 \
-        --amp \
+
         2>&1
 elif [ "$TASK" = "validate" ]; then
     python MambaVision/validate.py \
