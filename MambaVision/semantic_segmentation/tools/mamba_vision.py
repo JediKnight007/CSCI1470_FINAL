@@ -21,7 +21,7 @@ except:
     from timm.models._builder import _update_default_model_kwargs as update_args
 from timm.models.vision_transformer import Mlp, PatchEmbed
 from timm.layers import DropPath, trunc_normal_
-from timm.models.registry import register_model
+from timm.models import register_model
 import torch.nn.functional as F
 from mamba_ssm.ops.selective_scan_interface import selective_scan_fn
 from einops import rearrange, repeat

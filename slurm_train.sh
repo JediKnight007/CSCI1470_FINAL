@@ -78,7 +78,6 @@ if [ "$TASK" = "train" ]; then
         --model-ema-decay 0.999 \
         --clip-grad 1.0 \
         --amp \
-        --dtype bfloat16 \
         2>&1
 elif [ "$TASK" = "validate" ]; then
     python MambaVision/validate.py \
