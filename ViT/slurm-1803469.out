@@ -1,0 +1,392 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1803469
+##  Job Name : vit_train
+##  Nodelist : gpu2263
+##      CPUs : 4
+##  Mem/Node : 16384 MB
+## Directory : /oscar/home/lke2/CSCI1470_FINAL
+##   Job Started : Mon Apr 20 12:21:46 PM EDT 2026
+###############################################################################
+/oscar/home/lke2/CSCI1470_FINAL/ViT/train_vit_baseline.py:132: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler()  # fp16 training
+Train images: 25000
+Val images: 8000
+Train class counts: Counter({0: 2500, 1: 2500, 2: 2500, 3: 2500, 4: 2500, 5: 2500, 6: 2500, 7: 2500, 8: 2500, 9: 2500})
+Val class counts: Counter({0: 800, 1: 800, 2: 800, 3: 800, 4: 800, 5: 800, 6: 800, 7: 800, 8: 800, 9: 800})
+/oscar/home/lke2/CSCI1470_FINAL/ViT/train_vit_baseline.py:145: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+/oscar/home/lke2/CSCI1470_FINAL/ViT/train_vit_baseline.py:162: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Epoch 1/400 — Val Acc: 15.25%
+  New best: 15.25%
+Epoch 2/400 — Val Acc: 15.09%
+Epoch 3/400 — Val Acc: 14.09%
+Epoch 4/400 — Val Acc: 14.68%
+Epoch 5/400 — Val Acc: 18.70%
+  New best: 18.70%
+Epoch 6/400 — Val Acc: 18.96%
+  New best: 18.96%
+Epoch 7/400 — Val Acc: 17.60%
+Epoch 8/400 — Val Acc: 10.64%
+Epoch 9/400 — Val Acc: 10.64%
+Epoch 10/400 — Val Acc: 12.22%
+[Timer] Elapsed time after 10 epochs: 506.56 seconds
+Epoch 11/400 — Val Acc: 13.49%
+Epoch 12/400 — Val Acc: 16.06%
+Epoch 13/400 — Val Acc: 13.89%
+Epoch 14/400 — Val Acc: 17.71%
+Epoch 15/400 — Val Acc: 17.16%
+Epoch 16/400 — Val Acc: 16.05%
+Epoch 17/400 — Val Acc: 12.91%
+Epoch 18/400 — Val Acc: 15.32%
+Epoch 19/400 — Val Acc: 18.94%
+Epoch 20/400 — Val Acc: 18.44%
+[Timer] Elapsed time after 20 epochs: 993.18 seconds
+Epoch 21/400 — Val Acc: 17.36%
+Epoch 22/400 — Val Acc: 17.65%
+Epoch 23/400 — Val Acc: 20.29%
+  New best: 20.29%
+Epoch 24/400 — Val Acc: 23.61%
+  New best: 23.61%
+Epoch 25/400 — Val Acc: 23.02%
+Epoch 26/400 — Val Acc: 23.66%
+  New best: 23.66%
+Epoch 27/400 — Val Acc: 29.45%
+  New best: 29.45%
+Epoch 28/400 — Val Acc: 30.64%
+  New best: 30.64%
+Epoch 29/400 — Val Acc: 31.64%
+  New best: 31.64%
+Epoch 30/400 — Val Acc: 32.58%
+  New best: 32.58%
+[Timer] Elapsed time after 30 epochs: 1478.79 seconds
+Epoch 31/400 — Val Acc: 31.34%
+Epoch 32/400 — Val Acc: 34.54%
+  New best: 34.54%
+Epoch 33/400 — Val Acc: 37.09%
+  New best: 37.09%
+Epoch 34/400 — Val Acc: 35.81%
+Epoch 35/400 — Val Acc: 38.09%
+  New best: 38.09%
+Epoch 36/400 — Val Acc: 37.30%
+Epoch 37/400 — Val Acc: 34.56%
+Epoch 38/400 — Val Acc: 41.19%
+  New best: 41.19%
+Epoch 39/400 — Val Acc: 40.15%
+Epoch 40/400 — Val Acc: 42.67%
+  New best: 42.67%
+[Timer] Elapsed time after 40 epochs: 1968.70 seconds
+Epoch 41/400 — Val Acc: 45.19%
+  New best: 45.19%
+Epoch 42/400 — Val Acc: 42.96%
+Epoch 43/400 — Val Acc: 45.02%
+Epoch 44/400 — Val Acc: 43.27%
+Epoch 45/400 — Val Acc: 44.69%
+Epoch 46/400 — Val Acc: 47.05%
+  New best: 47.05%
+Epoch 47/400 — Val Acc: 45.88%
+Epoch 48/400 — Val Acc: 47.71%
+  New best: 47.71%
+Epoch 49/400 — Val Acc: 48.89%
+  New best: 48.89%
+Epoch 50/400 — Val Acc: 46.84%
+[Timer] Elapsed time after 50 epochs: 2456.31 seconds
+Epoch 51/400 — Val Acc: 48.12%
+Epoch 52/400 — Val Acc: 48.69%
+Epoch 53/400 — Val Acc: 50.19%
+  New best: 50.19%
+Epoch 54/400 — Val Acc: 46.19%
+Epoch 55/400 — Val Acc: 51.17%
+  New best: 51.17%
+Epoch 56/400 — Val Acc: 50.26%
+Epoch 57/400 — Val Acc: 52.51%
+  New best: 52.51%
+Epoch 58/400 — Val Acc: 51.89%
+Epoch 59/400 — Val Acc: 51.33%
+Epoch 60/400 — Val Acc: 52.88%
+  New best: 52.88%
+[Timer] Elapsed time after 60 epochs: 2942.01 seconds
+Epoch 61/400 — Val Acc: 51.04%
+Epoch 62/400 — Val Acc: 53.59%
+  New best: 53.59%
+Epoch 63/400 — Val Acc: 54.16%
+  New best: 54.16%
+Epoch 64/400 — Val Acc: 53.61%
+Epoch 65/400 — Val Acc: 52.85%
+Epoch 66/400 — Val Acc: 53.14%
+Epoch 67/400 — Val Acc: 53.75%
+Epoch 68/400 — Val Acc: 54.36%
+  New best: 54.36%
+Epoch 69/400 — Val Acc: 55.50%
+  New best: 55.50%
+Epoch 70/400 — Val Acc: 52.44%
+[Timer] Elapsed time after 70 epochs: 3431.94 seconds
+Epoch 71/400 — Val Acc: 53.23%
+Epoch 72/400 — Val Acc: 58.48%
+  New best: 58.48%
+Epoch 73/400 — Val Acc: 55.38%
+Epoch 74/400 — Val Acc: 57.39%
+Epoch 75/400 — Val Acc: 58.26%
+Epoch 76/400 — Val Acc: 56.21%
+Epoch 77/400 — Val Acc: 58.73%
+  New best: 58.73%
+Epoch 78/400 — Val Acc: 59.35%
+  New best: 59.35%
+Epoch 79/400 — Val Acc: 57.91%
+Epoch 80/400 — Val Acc: 57.69%
+[Timer] Elapsed time after 80 epochs: 3921.13 seconds
+Epoch 81/400 — Val Acc: 56.58%
+Epoch 82/400 — Val Acc: 60.06%
+  New best: 60.06%
+Epoch 83/400 — Val Acc: 59.35%
+Epoch 84/400 — Val Acc: 58.12%
+Epoch 85/400 — Val Acc: 57.99%
+Epoch 86/400 — Val Acc: 56.49%
+Epoch 87/400 — Val Acc: 58.25%
+Epoch 88/400 — Val Acc: 56.51%
+Epoch 89/400 — Val Acc: 60.83%
+  New best: 60.83%
+Epoch 90/400 — Val Acc: 60.70%
+[Timer] Elapsed time after 90 epochs: 4410.48 seconds
+Epoch 91/400 — Val Acc: 59.89%
+Epoch 92/400 — Val Acc: 61.09%
+  New best: 61.09%
+Epoch 93/400 — Val Acc: 59.74%
+Epoch 94/400 — Val Acc: 60.56%
+Epoch 95/400 — Val Acc: 59.50%
+Epoch 96/400 — Val Acc: 59.24%
+Epoch 97/400 — Val Acc: 61.55%
+  New best: 61.55%
+Epoch 98/400 — Val Acc: 62.20%
+  New best: 62.20%
+Epoch 99/400 — Val Acc: 58.17%
+Epoch 100/400 — Val Acc: 60.99%
+[Timer] Elapsed time after 100 epochs: 4891.57 seconds
+Epoch 101/400 — Val Acc: 59.95%
+Epoch 102/400 — Val Acc: 61.41%
+Epoch 103/400 — Val Acc: 61.26%
+Epoch 104/400 — Val Acc: 62.83%
+  New best: 62.83%
+Epoch 105/400 — Val Acc: 61.01%
+Epoch 106/400 — Val Acc: 62.70%
+Epoch 107/400 — Val Acc: 61.36%
+Epoch 108/400 — Val Acc: 60.08%
+Epoch 109/400 — Val Acc: 59.92%
+Epoch 110/400 — Val Acc: 58.86%
+[Timer] Elapsed time after 110 epochs: 5377.75 seconds
+Epoch 111/400 — Val Acc: 59.73%
+Epoch 112/400 — Val Acc: 59.38%
+Epoch 113/400 — Val Acc: 59.86%
+Epoch 114/400 — Val Acc: 56.69%
+Epoch 115/400 — Val Acc: 60.88%
+Epoch 116/400 — Val Acc: 60.23%
+Epoch 117/400 — Val Acc: 59.84%
+Epoch 118/400 — Val Acc: 61.64%
+Epoch 119/400 — Val Acc: 62.20%
+Epoch 120/400 — Val Acc: 60.55%
+[Timer] Elapsed time after 120 epochs: 5866.89 seconds
+Epoch 121/400 — Val Acc: 61.88%
+Epoch 122/400 — Val Acc: 60.55%
+Epoch 123/400 — Val Acc: 60.20%
+Epoch 124/400 — Val Acc: 62.62%
+Epoch 125/400 — Val Acc: 61.00%
+Epoch 126/400 — Val Acc: 61.60%
+Epoch 127/400 — Val Acc: 61.19%
+Epoch 128/400 — Val Acc: 62.92%
+  New best: 62.92%
+Epoch 129/400 — Val Acc: 61.29%
+Epoch 130/400 — Val Acc: 62.27%
+[Timer] Elapsed time after 130 epochs: 6352.74 seconds
+Epoch 131/400 — Val Acc: 60.39%
+Epoch 132/400 — Val Acc: 61.61%
+Epoch 133/400 — Val Acc: 61.06%
+Epoch 134/400 — Val Acc: 57.94%
+Epoch 135/400 — Val Acc: 62.12%
+Epoch 136/400 — Val Acc: 60.79%
+Epoch 137/400 — Val Acc: 63.48%
+  New best: 63.48%
+Epoch 138/400 — Val Acc: 62.16%
+Epoch 139/400 — Val Acc: 61.80%
+Epoch 140/400 — Val Acc: 59.14%
+[Timer] Elapsed time after 140 epochs: 6838.77 seconds
+Epoch 141/400 — Val Acc: 58.66%
+Epoch 142/400 — Val Acc: 59.85%
+Epoch 143/400 — Val Acc: 62.60%
+Epoch 144/400 — Val Acc: 62.98%
+Epoch 145/400 — Val Acc: 63.00%
+Epoch 146/400 — Val Acc: 61.70%
+Epoch 147/400 — Val Acc: 60.90%
+Epoch 148/400 — Val Acc: 62.26%
+Epoch 149/400 — Val Acc: 62.86%
+Epoch 150/400 — Val Acc: 61.71%
+[Timer] Elapsed time after 150 epochs: 7322.97 seconds
+Epoch 151/400 — Val Acc: 62.66%
+Epoch 152/400 — Val Acc: 61.65%
+Epoch 153/400 — Val Acc: 62.01%
+Epoch 154/400 — Val Acc: 63.00%
+Epoch 155/400 — Val Acc: 62.99%
+Epoch 156/400 — Val Acc: 61.00%
+Epoch 157/400 — Val Acc: 63.02%
+Epoch 158/400 — Val Acc: 61.11%
+Epoch 159/400 — Val Acc: 62.85%
+Epoch 160/400 — Val Acc: 62.02%
+[Timer] Elapsed time after 160 epochs: 7812.19 seconds
+Epoch 161/400 — Val Acc: 63.46%
+Epoch 162/400 — Val Acc: 62.16%
+Epoch 163/400 — Val Acc: 63.64%
+  New best: 63.64%
+Epoch 164/400 — Val Acc: 63.42%
+Epoch 165/400 — Val Acc: 63.51%
+Epoch 166/400 — Val Acc: 63.56%
+Epoch 167/400 — Val Acc: 62.44%
+Epoch 168/400 — Val Acc: 61.84%
+Epoch 169/400 — Val Acc: 64.04%
+  New best: 64.04%
+Epoch 170/400 — Val Acc: 60.64%
+[Timer] Elapsed time after 170 epochs: 8300.47 seconds
+Epoch 171/400 — Val Acc: 62.96%
+Epoch 172/400 — Val Acc: 65.20%
+  New best: 65.20%
+Epoch 173/400 — Val Acc: 63.80%
+Epoch 174/400 — Val Acc: 63.08%
+Epoch 175/400 — Val Acc: 62.70%
+Epoch 176/400 — Val Acc: 63.52%
+Epoch 177/400 — Val Acc: 62.21%
+Epoch 178/400 — Val Acc: 63.02%
+Epoch 179/400 — Val Acc: 63.20%
+Epoch 180/400 — Val Acc: 62.54%
+[Timer] Elapsed time after 180 epochs: 8789.39 seconds
+Epoch 181/400 — Val Acc: 64.46%
+Epoch 182/400 — Val Acc: 60.76%
+Epoch 183/400 — Val Acc: 62.91%
+Epoch 184/400 — Val Acc: 64.19%
+Epoch 185/400 — Val Acc: 62.77%
+Epoch 186/400 — Val Acc: 62.99%
+Epoch 187/400 — Val Acc: 64.80%
+Epoch 188/400 — Val Acc: 63.01%
+Epoch 189/400 — Val Acc: 64.74%
+Epoch 190/400 — Val Acc: 62.96%
+[Timer] Elapsed time after 190 epochs: 9274.32 seconds
+Epoch 191/400 — Val Acc: 62.91%
+Epoch 192/400 — Val Acc: 65.17%
+Epoch 193/400 — Val Acc: 64.00%
+Epoch 194/400 — Val Acc: 64.40%
+Epoch 195/400 — Val Acc: 64.97%
+Epoch 196/400 — Val Acc: 62.94%
+Epoch 197/400 — Val Acc: 64.01%
+Epoch 198/400 — Val Acc: 63.46%
+Epoch 199/400 — Val Acc: 65.94%
+  New best: 65.94%
+Epoch 200/400 — Val Acc: 63.20%
+[Timer] Elapsed time after 200 epochs: 9760.42 seconds
+Epoch 201/400 — Val Acc: 65.83%
+Epoch 202/400 — Val Acc: 63.80%
+Epoch 203/400 — Val Acc: 62.70%
+Epoch 204/400 — Val Acc: 64.79%
+Epoch 205/400 — Val Acc: 63.67%
+Epoch 206/400 — Val Acc: 63.20%
+Epoch 207/400 — Val Acc: 63.95%
+Epoch 208/400 — Val Acc: 63.65%
+Epoch 209/400 — Val Acc: 62.91%
+Epoch 210/400 — Val Acc: 66.08%
+  New best: 66.08%
+[Timer] Elapsed time after 210 epochs: 10246.07 seconds
+Epoch 211/400 — Val Acc: 64.44%
+Epoch 212/400 — Val Acc: 64.64%
+Epoch 213/400 — Val Acc: 64.89%
+Epoch 214/400 — Val Acc: 63.84%
+Epoch 215/400 — Val Acc: 64.30%
+Epoch 216/400 — Val Acc: 65.64%
+Epoch 217/400 — Val Acc: 64.88%
+Epoch 218/400 — Val Acc: 64.60%
+Epoch 219/400 — Val Acc: 65.03%
+Epoch 220/400 — Val Acc: 66.03%
+[Timer] Elapsed time after 220 epochs: 10733.50 seconds
+Epoch 221/400 — Val Acc: 65.78%
+Epoch 222/400 — Val Acc: 65.50%
+Epoch 223/400 — Val Acc: 65.41%
+Epoch 224/400 — Val Acc: 65.61%
+Epoch 225/400 — Val Acc: 64.35%
+Epoch 226/400 — Val Acc: 64.79%
+Epoch 227/400 — Val Acc: 65.30%
+Epoch 228/400 — Val Acc: 65.92%
+Epoch 229/400 — Val Acc: 64.39%
+Epoch 230/400 — Val Acc: 65.59%
+[Timer] Elapsed time after 230 epochs: 11225.05 seconds
+Epoch 231/400 — Val Acc: 64.33%
+Epoch 232/400 — Val Acc: 65.51%
+Epoch 233/400 — Val Acc: 64.90%
+Epoch 234/400 — Val Acc: 64.59%
+Epoch 235/400 — Val Acc: 65.61%
+Epoch 236/400 — Val Acc: 66.38%
+  New best: 66.38%
+Epoch 237/400 — Val Acc: 65.96%
+Epoch 238/400 — Val Acc: 65.17%
+Epoch 239/400 — Val Acc: 66.04%
+Epoch 240/400 — Val Acc: 64.38%
+[Timer] Elapsed time after 240 epochs: 11708.61 seconds
+Epoch 241/400 — Val Acc: 65.40%
+Epoch 242/400 — Val Acc: 66.39%
+  New best: 66.39%
+Epoch 243/400 — Val Acc: 65.26%
+Epoch 244/400 — Val Acc: 65.11%
+Epoch 245/400 — Val Acc: 66.66%
+  New best: 66.66%
+Epoch 246/400 — Val Acc: 66.42%
+Epoch 247/400 — Val Acc: 65.61%
+Epoch 248/400 — Val Acc: 65.79%
+Epoch 249/400 — Val Acc: 65.19%
+Epoch 250/400 — Val Acc: 65.39%
+[Timer] Elapsed time after 250 epochs: 12188.95 seconds
+Epoch 251/400 — Val Acc: 67.71%
+  New best: 67.71%
+Epoch 252/400 — Val Acc: 65.64%
+Epoch 253/400 — Val Acc: 65.70%
+Epoch 254/400 — Val Acc: 67.01%
+Epoch 255/400 — Val Acc: 66.96%
+Epoch 256/400 — Val Acc: 63.61%
+Epoch 257/400 — Val Acc: 66.85%
+Epoch 258/400 — Val Acc: 65.39%
+Epoch 259/400 — Val Acc: 66.21%
+Epoch 260/400 — Val Acc: 66.97%
+[Timer] Elapsed time after 260 epochs: 12670.89 seconds
+Epoch 261/400 — Val Acc: 65.75%
+Epoch 262/400 — Val Acc: 66.42%
+Epoch 263/400 — Val Acc: 65.28%
+Epoch 264/400 — Val Acc: 65.25%
+Epoch 265/400 — Val Acc: 66.58%
+Epoch 266/400 — Val Acc: 66.30%
+Epoch 267/400 — Val Acc: 65.84%
+Epoch 268/400 — Val Acc: 66.53%
+Epoch 269/400 — Val Acc: 66.56%
+Epoch 270/400 — Val Acc: 66.03%
+[Timer] Elapsed time after 270 epochs: 13156.37 seconds
+Epoch 271/400 — Val Acc: 65.74%
+Epoch 272/400 — Val Acc: 67.24%
+Epoch 273/400 — Val Acc: 66.29%
+Epoch 274/400 — Val Acc: 67.45%
+Epoch 275/400 — Val Acc: 67.42%
+Epoch 276/400 — Val Acc: 66.45%
+Epoch 277/400 — Val Acc: 66.35%
+Epoch 278/400 — Val Acc: 65.92%
+Epoch 279/400 — Val Acc: 66.76%
+Epoch 280/400 — Val Acc: 67.64%
+[Timer] Elapsed time after 280 epochs: 13642.57 seconds
+Epoch 281/400 — Val Acc: 67.86%
+  New best: 67.86%
+Epoch 282/400 — Val Acc: 66.86%
+Epoch 283/400 — Val Acc: 67.03%
+Epoch 284/400 — Val Acc: 67.10%
+Epoch 285/400 — Val Acc: 67.16%
+Epoch 286/400 — Val Acc: 66.85%
+Epoch 287/400 — Val Acc: 68.51%
+  New best: 68.51%
+Epoch 288/400 — Val Acc: 68.11%
+Epoch 289/400 — Val Acc: 67.06%
+Epoch 290/400 — Val Acc: 67.69%
+[Timer] Elapsed time after 290 epochs: 14134.18 seconds
+Epoch 291/400 — Val Acc: 67.08%
+Epoch 292/400 — Val Acc: 67.80%
+Epoch 293/400 — Val Acc: 67.83%
+Epoch 294/400 — Val Acc: 68.10%
+Epoch 295/400 — Val Acc: 67.42%
