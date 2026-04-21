@@ -347,7 +347,7 @@ class MambaVisionMixer(nn.Module):
         self.dt_rank = math.ceil(self.d_model / 16) if dt_rank == "auto" else dt_rank
         self.use_fast_path = use_fast_path
         self.layer_idx = layer_idx
-        self.in_proj = nn.Linear(self.d_model, self.d_inner, bias=bias, **factory_kwargs)    
+        self.in_proj = nn.Linear(self.d_model, self.d_inner//2, bias=bias, **factory_kwargs)    # Only X branch
         self.x_proj = nn.Linear(
             self.d_inner//2, self.dt_rank + self.d_state * 2, bias=False, **factory_kwargs
         )
@@ -377,16 +377,8 @@ class MambaVisionMixer(nn.Module):
         self.A_log._no_weight_decay = True
         self.D = nn.Parameter(torch.ones(self.d_inner//2, device=device))
         self.D._no_weight_decay = True
-        self.out_proj = nn.Linear(self.d_inner, self.d_model, bias=bias, **factory_kwargs)
+        self.out_proj = nn.Linear(self.d_inner//2, self.d_model, bias=bias, **factory_kwargs)
         self.conv1d_x = nn.Conv1d(
-            in_channels=self.d_inner//2,
-            out_channels=self.d_inner//2,
-            bias=conv_bias//2,
-            kernel_size=d_conv,
-            groups=self.d_inner//2,
-            **factory_kwargs,
-        )
-        self.conv1d_z = nn.Conv1d(
             in_channels=self.d_inner//2,
             out_channels=self.d_inner//2,
             bias=conv_bias//2,
@@ -401,12 +393,10 @@ class MambaVisionMixer(nn.Module):
         Returns: same shape as hidden_states
         """
         _, seqlen, _ = hidden_states.shape
-        xz = self.in_proj(hidden_states)
-        xz = rearrange(xz, "b l d -> b d l")
-        x, z = xz.chunk(2, dim=1)
+        x = self.in_proj(hidden_states)
+        x = rearrange(x, "b l d -> b d l")
         A = -torch.exp(self.A_log.float())
         x = F.silu(F.conv1d(input=x, weight=self.conv1d_x.weight, bias=self.conv1d_x.bias, padding='same', groups=self.d_inner//2))
-        z = F.silu(F.conv1d(input=z, weight=self.conv1d_z.weight, bias=self.conv1d_z.bias, padding='same', groups=self.d_inner//2))
         x_dbl = self.x_proj(rearrange(x, "b d l -> (b l) d"))
         dt, B, C = torch.split(x_dbl, [self.dt_rank, self.d_state, self.d_state], dim=-1)
         dt = rearrange(self.dt_proj(dt), "(b l) d -> b d l", l=seqlen)
@@ -422,11 +412,16 @@ class MambaVisionMixer(nn.Module):
                               delta_bias=self.dt_proj.bias.float(), 
                               delta_softplus=True, 
                               return_last_state=None)
-        
-        y = torch.cat([y, z], dim=1)
         y = rearrange(y, "b d l -> b l d")
         out = self.out_proj(y)
         return out
+    # Register ablation variant
+    @register_model
+    def mamba_vision_tiny_nobypass(pretrained=False, **kwargs):
+        model = MambaVision(
+            patch_size=4, embed_dim=48, depths=[2, 2, 6, 2], num_heads=[3, 6, 12, 24],
+            window_size=7, mlp_ratio=4., qkv_bias=True, norm_layer=nn.LayerNorm, **kwargs)
+        return model
     
 
 class Attention(nn.Module):
