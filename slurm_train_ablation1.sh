@@ -38,9 +38,9 @@ export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
 echo "Environment ready."
 
 if [ "$TASK" = "train" ]; then
-    python MambaVision/train.py \
+    python Mambavision_Ablation_1/train.py \
         --model mamba_vision_T_nobypass \
-        --config MambaVision/configs/mambavision_tiny_1k.yaml \
+        --config Mambavision_Ablation_1/configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --data_len 25000 \
@@ -56,9 +56,9 @@ if [ "$TASK" = "train" ]; then
         --model-ema-decay 0.999 \
         --clip-grad 1.0
 elif [ "$TASK" = "validate" ]; then
-    python MambaVision/validate.py \
+    python Mambavision_Ablation_1/validate.py \
         --model mamba_vision_T_nobypass \
-        --config MambaVision/configs/mambavision_tiny_1k.yaml \
+        --config Mambavision_Ablation_1/configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --tta 3
