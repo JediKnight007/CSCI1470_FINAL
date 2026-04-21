@@ -54,7 +54,8 @@ if [ "$TASK" = "train" ]; then
         --cutmix 0.5 \
         --workers 4 \
         --model-ema-decay 0.999 \
-        --clip-grad 1.0
+        --clip-grad 1.0 \
+        --drop-path 0.2
 elif [ "$TASK" = "validate" ]; then
     python validate.py \
         --model mamba_vision_T_nobypass \
