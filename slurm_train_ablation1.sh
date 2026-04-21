@@ -18,7 +18,7 @@ echo "Started:   $(date)"
 echo "GPU: $(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo 'none')"
 echo "============================================"
 
-cd "$SLURM_SUBMIT_DIR"
+cd "$SLURM_SUBMIT_DIR/Mambavision_Ablation_1"
 
 VENV_DIR=~/envs/cs1470
 PYTHON_MODULE=python/3.11.11-5e66
@@ -38,9 +38,9 @@ export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
 echo "Environment ready."
 
 if [ "$TASK" = "train" ]; then
-    python Mambavision_Ablation_1/train.py \
+    python train.py \
         --model mamba_vision_T_nobypass \
-        --config Mambavision_Ablation_1/configs/mambavision_tiny_1k.yaml \
+        --config configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --data_len 25000 \
@@ -56,9 +56,9 @@ if [ "$TASK" = "train" ]; then
         --model-ema-decay 0.999 \
         --clip-grad 1.0
 elif [ "$TASK" = "validate" ]; then
-    python Mambavision_Ablation_1/validate.py \
+    python validate.py \
         --model mamba_vision_T_nobypass \
-        --config Mambavision_Ablation_1/configs/mambavision_tiny_1k.yaml \
+        --config configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
         --tta 3
