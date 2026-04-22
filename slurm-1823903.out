@@ -1,0 +1,37 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1823903
+##  Job Name : stl10_nobypass
+##  Nodelist : gpu3102
+##      CPUs : 4
+##  Mem/Node : 16384 MB
+## Directory : /oscar/home/hzhan382/CSCI1470_FINAL_latest
+##   Job Started : Tue Apr 21 21:19:19 EDT 2026
+###############################################################################
+============================================
+Job ID:    1823903
+Task:      train
+Node:      gpu3102.oscar.ccv.brown.edu
+Started:   Tue Apr 21 21:19:19 EDT 2026
+GPU: NVIDIA L40S
+============================================
+Environment ready.
+filter_bias_and_bn
+
+Top-1 accuracy every 25 epochs:
+Epoch   0: 29.89%
+Epoch  25: 58.44%
+Epoch  50: 68.39%
+Epoch  75: 76.16%
+Epoch 100: 81.29%
+Epoch 125: 83.76%
+Epoch 150: 84.92%
+Epoch 175: 85.78%
+Epoch 200: 86.85%
+Epoch 225: 87.31%
+Epoch 250: 87.47%
+Epoch 275: 87.58%
+Epoch 300: 87.56%
+Epoch 304: 87.65%
+============================================
+Finished:  Wed Apr 22 00:47:30 EDT 2026
+============================================
