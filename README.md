@@ -18,37 +18,6 @@ Our results are highly promising and validate the original paper's claims. Our r
 - **On Track?**: We’re on track with our project. Now that we've confirmed the model's high accuracy, we need to show why it works so well by testing it with certain components turned off. We need to spend more time isolating the effects of the MambaVision token mixer (by testing the model without its specific State Space Model branch) and experimenting with the hybrid layout (to see how performance suffers when we remove the self-attention blocks from the model's final layers).
 -	**Possible changes**: Based on the final data, we are adjusting our narrative focus. Initially, preliminary tests made us think the bypass branch had a negligible effect. However, our final results show the "no bypass" ablation actually caused a steeper penalty (-1.6%) than shifting the attention blocks (-1.275%). We will now change our conclusion to emphasize that MambaVision’s success relies just as heavily on its internal block redesign (the bypass branch) as it does on its macro layout (final-layer attention).
 
-<br></br>
-
-## ViT Baseline: Data Preparation & Fair Comparison
-
-### STL-10 ImageFolder Augmentation (No Duplicates)
-
-To ensure a fair comparison between MambaVision and ViT baselines, we:
-
-1. **Convert STL-10 to ImageFolder:**
-  - Run `python prepare_stl10_imagefolder.py` to convert the STL-10 binary files to ImageFolder format.
-  - The script applies 4 augmentations (horizontal flip, 90°/180°/270° rotation) to each original image, producing 5 images per original (5,000 × 5 = 25,000 images).
-  - **Duplicate Prevention:** The script now clears the output train directory before saving, ensuring no duplicate images are present, even if rerun.
-
-2. **Verify Dataset Size:**
-  - After running the script, each class folder in `STL-10/imagefolder/train/` should contain exactly 2,500 images (for 25,000 total).
-  - Check with:
-    ```bash
-    cd STL-10/imagefolder/train
-    for d in */; do echo "$d: $(ls "$d" | wc -l)"; done
-    ```
-
-3. **Set Data Path in Training Scripts:**
-  - Both MambaVision and ViT training scripts must use the same train directory: `/absolute/path/to/STL-10/imagefolder/train`.
-  - This guarantees both models see the same data and augmentation.
-
-4. **Retrain for Fair Comparison:**
-  - After confirming the dataset, retrain both models. Results are only comparable if the data pipeline is identical.
-
-**Note:** If you see more than 2,500 images per class (e.g., 3,000), clear the train directory and rerun the augmentation script to avoid duplicates.
-
----
 ---
 
 
@@ -73,25 +42,87 @@ All runs use MambaVision-T trained from scratch on STL-10 on Brown University's 
 | 6 | 25k augmented | 304 | 76.0% | Best at epoch 304; EMA top-1 76.03%; LR still decaying |
 | 7 | 25k augmented | 404 | **79.7%** | Resumed from ep 304 with fixed data_len; LR reached min-lr at ep 400; fully converged |
 
+
+### Final Ablation Results
+
+| Model                           | Params  | Best Top-1  | Epoch | Delta vs Baseline     |
+|---------------------------------|---------|-------------|-------|-----------------------|
+| MambaVision-T (full)            | 31.8M   | **89.225%** | 290   | —                     |
+| MambaVision-T (no bypass)       | ~31.8M  | 87.625%     | 280   | -1.600%               |
+| MambaVision-T (first-half attn) | 31.8M   | 87.950%     | 270   | -1.275%               |
+| MambaVision-T (no attn)         | 31.8M   | 85.375%     | 259   | -3.850%               |
+|                                 |         |             |       |                       |
+| ViT-Tiny *(separate baseline)*  | 5.7M    | 71.310%     | 350   | -17.915% *(ref only)* |
+| ViT-Small *(separate baseline)* | 22M     | 68.390%     | 298   | -20.835% *(ref only)* |
+---
+
+## ViT Baseline: Data Preparation & Fair Comparison
+
+To ensure a fair comparison between MambaVision and ViT baselines, we standardized
+the data pipeline as follows:
+
+1. **Convert STL-10 to ImageFolder:**
+   - Run `python prepare_stl10_imagefolder.py` to convert the STL-10 binary files
+     to ImageFolder format.
+   - The script applies 4 augmentations (horizontal flip, 90°/180°/270° rotation)
+     to each original image, producing 5 images per original (5,000 × 5 = 25,000 images).
+   - **Duplicate Prevention:** The script clears the output train directory before
+     saving, ensuring no duplicates even if rerun.
+
+2. **Verify Dataset Size:**
+   - Each class folder in `STL-10/imagefolder/train/` should contain exactly 2,500
+     images (25,000 total). Check with:
+```bash
+     cd STL-10/imagefolder/train
+     for d in */; do echo "$d: $(ls "$d" | wc -l)"; done
+```
+
+3. **Set Data Path in Training Scripts:**
+   - Both MambaVision and ViT training scripts must use the same train directory:
+     `/absolute/path/to/STL-10/imagefolder/train`.
+   - This guarantees both models see identical data and augmentation.
+
+4. **Retrain for Fair Comparison:**
+   - Results are only comparable if the data pipeline is identical for both models.
+
+> **Note:** If you see more than 2,500 images per class (e.g., 3,000), clear the
+> train directory and rerun the augmentation script to avoid duplicates.
 ---
 
 ## Directory Structure
 
 ```
-CS1470FINAL/
-├── MambaVision/              # MambaVision model code (from official repo)
-│   ├── train.py              # Main training script
-│   ├── validate.py           # Validation script
-│   ├── configs/              # YAML configs per model variant
+
+CSCI1470_FINAL_LATEST/
+├── checkins/                          # Check-in writeups
+│   └── checkin2.md                    # Check-in 2 reflection
+├── MambaVision/                       # MambaVision baseline (official repo)
+│   ├── train.py                       # Main training script
+│   ├── validate.py                    # Validation script
+│   ├── configs/                       # YAML configs per model variant
 │   └── models/mamba_vision.py
-├── STL-10/                   # Dataset (not tracked in git)
-│   ├── stl10_binary/         # Raw binary files from download
-│   └── imagefolder/          # Converted ImageFolder structure (generated)
-├── download_stl10.py         # Downloads STL-10 from Stanford
-├── prepare_stl10_imagefolder.py  # Converts STL-10 to ImageFolder + augmentation
-├── setup_env.sh              # One-time environment setup (run on login node)
-├── slurm_train.sh            # SLURM job submission script
-└── stl10_dataset.py          # Custom STL-10 dataset wrapper (reference)
+├── Mambavision_Ablation_1/            # Ablation: no bypass branch
+│   └── models/mamba_vision.py
+├── Mambavision_Ablation_2/            # Ablation: first-half attention
+│   └── models/mamba_vision.py
+├── Mambavision_Ablation_3/            # Ablation: no attention (SSM-only)
+│   └── models/mamba_vision.py
+├── ViT/                               # ViT baseline
+├── STL-10/                            # Dataset (not tracked in git)
+│   ├── stl10_binary/                  # Raw binary files from download
+│   └── imagefolder/                   # Converted ImageFolder structure (generated)
+├── output/                            # Training checkpoints and logs (not tracked in git)
+├── slurm-runs/                        # Archived slurm output files
+├── download_stl10.py                  # Downloads STL-10 from Stanford
+├── prepare_stl10_imagefolder.py       # Converts STL-10 to ImageFolder + augmentation
+├── setup_env.sh                       # One-time environment setup (run on login node)
+├── slurm_train.sh                     # Main MambaVision training job
+├── slurm_train_ablation1.sh           # Ablation 1 training job
+├── slurm_train_ablation2.sh           # Ablation 2 training job
+├── slurm_train_ablation3.sh           # Ablation 3 training job
+├── slurm_train_vit.sh                 # ViT baseline training job
+└── README.md
+
 ```
 
 ---
@@ -226,6 +257,14 @@ Large datasets are not tracked in this repository. STL-10 is downloaded automati
 
 - **STL-10**: Downloaded via `python download_stl10.py` (Stanford hosted)
 - **ObjectNet / MedMNIST**: Planned for future experiments
+
+---
+
+## Course Check-ins
+
+| Check-in | Link |
+|----------|------|
+| Check-in 2 | [checkins/checkin2.md](checkins/checkin2.md) |
 
 ---
 
