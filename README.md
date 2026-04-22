@@ -269,4 +269,4 @@ Large datasets are not tracked in this repository. STL-10 is downloaded automati
 ---
 
 ## Contact
-Team: Ube Macchiatos
+Team: Ube Macchiatos 🍠⋆☕︎˖
