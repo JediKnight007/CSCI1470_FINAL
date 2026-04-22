@@ -21,7 +21,7 @@ Our results are highly promising and validate the original paper's claims. Our r
 ---
 
 
-# Ube Macchiatos: MambaVision Replication Project
+# 🧋 Ube Macchiatos: MambaVision Replication Project
 
 ## Project Overview
 This project is a critical replication and analysis of MambaVision, the first hybrid Mamba-Transformer vision backbone. We focus on the MambaVision-T (Tiny) variant, aiming to verify its accuracy and efficiency claims, and to perform hypothesis-driven ablations on its hybrid mixer block. We compare it against transformer baselines (e.g., DeiT-Tiny / ViT-Tiny) and evaluate on the STL-10 dataset.
@@ -93,7 +93,7 @@ the data pipeline as follows:
 
 ```
 
-CSCI1470_FINAL_LATEST/
+CSCI1470_FINAL/
 ├── checkins/                          # Check-in writeups
 │   └── checkin2.md                    # Check-in 2 reflection
 ├── MambaVision/                       # MambaVision baseline (official repo)
