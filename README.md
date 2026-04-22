@@ -14,7 +14,7 @@ Our results are highly promising and validate the original paper's claims. Our r
   1. **Attention Placement Matters**: Moving self-attention to the first half of the network stages caused a 1.275% accuracy drop (to 87.95%), proving self-attention is most effective in the final layers to capture global context. Removing attention entirely caused a massive 3.85% drop. 
   2. **The Bypass Branch is Crucial**: Removing the symmetric non-SSM branch resulted in a substantial 1.6% accuracy drop (to 87.625%), proving this parallel path is vital for making up for content lost in the SSM.
 
-## Plan
+### Plan
 - **On Track?**: We’re on track with our project. Now that we've confirmed the model's high accuracy, we need to show why it works so well by testing it with certain components turned off. We need to spend more time isolating the effects of the MambaVision token mixer (by testing the model without its specific State Space Model branch) and experimenting with the hybrid layout (to see how performance suffers when we remove the self-attention blocks from the model's final layers).
 -	**Possible changes**: Based on the final data, we are adjusting our narrative focus. Initially, preliminary tests made us think the bypass branch had a negligible effect. However, our final results show the "no bypass" ablation actually caused a steeper penalty (-1.6%) than shifting the attention blocks (-1.275%). We will now change our conclusion to emphasize that MambaVision’s success relies just as heavily on its internal block redesign (the bypass branch) as it does on its macro layout (final-layer attention).
 
