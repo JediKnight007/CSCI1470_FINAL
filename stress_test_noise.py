@@ -90,7 +90,7 @@ def evaluate(model, data_dir, transform, batch_size=128):
 
 # ── Main ───────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    CHECKPOINT = "output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar"
+    CHECKPOINT = "output/train/mambavision_tiny_1k/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar"
     DATA_DIR = "STL-10/imagefolder/val"
 
     # Noise levels to test
