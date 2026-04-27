@@ -48,7 +48,7 @@ comparison — their deltas are shown for reference only.
 | Model                              | Params  | Best Top-1 | Epoch | Delta vs Baseline      |
 |------------------------------------|---------|------------|-------|------------------------|
 | MambaVision-T (full)               | 31.8M   | **89.225%**| 290   | —                      |
-| MambaVision-T (no bypass)          | ~31.8M  | 87.625%    | 280   | -1.600%                |
+| MambaVision-T (no bypass)          | ~31.8M  | 87.7125%   | 276   | -1.5125%               |
 | MambaVision-T (first-half attn)    | 31.8M   | 87.950%    | 270   | -1.275%                |
 | MambaVision-T (no attn)            | 31.8M   | 85.375%    | 259   | -3.850%                |
 |                                    |         |            |       |                        |
