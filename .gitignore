@@ -5,6 +5,6 @@ results/
 *.pt
 *.pth
 data/
-STL-10/output/
+STL-10/
 */log_dir/
 checkins/*.save
