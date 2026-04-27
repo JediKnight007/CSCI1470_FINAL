@@ -1,0 +1,49 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1939366
+##  Job Name : noise_stress_test
+##  Nodelist : gpu2103
+##      CPUs : 4
+##  Mem/Node : 16384 MB
+## Directory : /oscar/data/class/csci1430/students/apate206/CSCI1470_FINAL
+##   Job Started : Mon Apr 27 03:44:33 PM EDT 2026
+###############################################################################
+============================================
+Job ID:    1939366
+Node:      gpu2103.oscar.ccv.brown.edu
+Started:   Mon Apr 27 03:44:33 PM EDT 2026
+GPU: NVIDIA GeForce RTX 3090
+============================================
+Environment ready.
+Running Gaussian noise stress test...
+=================================================================
+MambaVision-T Gaussian Noise Stress Test
+=================================================================
+Checkpoint: output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar
+Data: STL-10/imagefolder/val
+=================================================================
+Loading checkpoint: output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar
+Loaded. Missing keys: 0, Unexpected: 0
+Clean (no noise)              Acc@1: 87.263%  Acc@5: 99.287%  Drop:  +0.000%
+Very mild (std=0.05)          Acc@1: 87.675%  Acc@5: 99.250%  Drop:  +0.412%
+Mild (std=0.10)               Acc@1: 87.237%  Acc@5: 99.150%  Drop:  -0.025%
+Moderate (std=0.20)           Acc@1: 85.425%  Acc@5: 99.138%  Drop:  -1.838%
+Severe (std=0.30)             Acc@1: 82.763%  Acc@5: 98.925%  Drop:  -4.500%
+Very severe (std=0.50)        Acc@1: 75.750%  Acc@5: 97.912%  Drop: -11.513%
+Extreme (std=1.00)            Acc@1: 43.688%  Acc@5: 88.050%  Drop: -43.575%
+
+=================================================================
+Condition                       Acc@1    Acc@5       Drop
+=================================================================
+Clean (no noise)              87.263%  99.287%     +0.000%
+Very mild (std=0.05)          87.675%  99.250%     +0.412%
+Mild (std=0.10)               87.237%  99.150%     -0.025%
+Moderate (std=0.20)           85.425%  99.138%     -1.838%
+Severe (std=0.30)             82.763%  98.925%     -4.500%
+Very severe (std=0.50)        75.750%  97.912%    -11.513%
+Extreme (std=1.00)            43.688%  88.050%    -43.575%
+=================================================================
+
+Results saved to stress_test_noise_results.json
+============================================
+Finished:  Mon Apr 27 03:46:13 PM EDT 2026
+============================================
