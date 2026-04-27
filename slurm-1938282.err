@@ -1,0 +1,90 @@
+Validating in float32. AMP not enabled.
+Loaded state_dict from checkpoint '/oscar/data/class/csci1430/students/apate206/CSCI1470_FINAL/output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar'
+Model mamba_vision_T created, param count: 31159658
+Data processing configuration for current model + dataset:
+	input_size: (3, 224, 224)
+	interpolation: bicubic
+	mean: (0.485, 0.456, 0.406)
+	std: (0.229, 0.224, 0.225)
+	crop_pct: 1.0
+	crop_mode: center
+Test: [   0/32]  Time: 1.494s (1.494s,  171.39/s)  Loss:  0.5407 (0.5407)  Acc@1:  88.672 ( 88.672)  Acc@5:  99.219 ( 99.219)
+Test: [  10/32]  Time: 0.149s (0.398s,  642.44/s)  Loss:  0.8522 (0.5791)  Acc@1:  75.000 ( 87.571)  Acc@5:  98.828 ( 99.112)
+Test: [  20/32]  Time: 0.430s (0.390s,  657.12/s)  Loss:  0.5107 (0.6290)  Acc@1:  91.406 ( 85.584)  Acc@5: 100.000 ( 99.144)
+Test: [  30/32]  Time: 0.144s (0.345s,  741.61/s)  Loss:  0.4369 (0.5928)  Acc@1:  94.922 ( 87.387)  Acc@5: 100.000 ( 99.269)
+ * Acc@1 87.475 (12.525) Acc@5 99.275 (0.725)
+Validating in float32. AMP not enabled.
+Loaded state_dict from checkpoint '/oscar/data/class/csci1430/students/apate206/CSCI1470_FINAL/output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar'
+Model mamba_vision_T created, param count: 31159658
+Data processing configuration for current model + dataset:
+	input_size: (3, 112, 112)
+	interpolation: bicubic
+	mean: (0.485, 0.456, 0.406)
+	std: (0.229, 0.224, 0.225)
+	crop_pct: 1.0
+	crop_mode: center
+Test: [   0/32]  Time: 1.317s (1.317s,  194.32/s)  Loss:  0.7586 (0.7586)  Acc@1:  82.031 ( 82.031)  Acc@5:  99.219 ( 99.219)
+Test: [  10/32]  Time: 0.110s (0.319s,  802.29/s)  Loss:  1.7302 (1.2260)  Acc@1:  42.969 ( 63.388)  Acc@5:  92.578 ( 91.903)
+Test: [  20/32]  Time: 0.626s (0.318s,  805.82/s)  Loss:  0.4967 (1.2827)  Acc@1:  89.453 ( 60.324)  Acc@5:  99.219 ( 93.750)
+Test: [  30/32]  Time: 0.105s (0.282s,  909.08/s)  Loss:  0.3959 (1.2007)  Acc@1:  91.797 ( 63.332)  Acc@5:  98.828 ( 93.775)
+ * Acc@1 63.525 (36.475) Acc@5 93.825 (6.175)
+Validating in float32. AMP not enabled.
+Loaded state_dict from checkpoint '/oscar/data/class/csci1430/students/apate206/CSCI1470_FINAL/output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar'
+Model mamba_vision_T created, param count: 31159658
+Data processing configuration for current model + dataset:
+	input_size: (3, 336, 336)
+	interpolation: bicubic
+	mean: (0.485, 0.456, 0.406)
+	std: (0.229, 0.224, 0.225)
+	crop_pct: 1.0
+	crop_mode: center
+Test: [   0/32]  Time: 1.959s (1.959s,  130.71/s)  Loss:  0.6007 (0.6007)  Acc@1:  86.719 ( 86.719)  Acc@5:  99.609 ( 99.609)
+Test: [  10/32]  Time: 0.486s (0.627s,  408.38/s)  Loss:  0.8643 (0.6723)  Acc@1:  79.688 ( 86.967)  Acc@5:  99.609 ( 99.219)
+Test: [  20/32]  Time: 0.488s (0.561s,  456.50/s)  Loss:  0.6889 (0.7611)  Acc@1:  89.844 ( 84.431)  Acc@5:  98.438 ( 99.107)
+Test: [  30/32]  Time: 0.473s (0.537s,  477.08/s)  Loss:  0.4485 (0.7215)  Acc@1:  96.484 ( 86.026)  Acc@5: 100.000 ( 99.194)
+ * Acc@1 86.138 (13.863) Acc@5 99.200 (0.800)
+Validating in float32. AMP not enabled.
+Loaded state_dict from checkpoint '/oscar/data/class/csci1430/students/apate206/CSCI1470_FINAL/output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar'
+Model mamba_vision_T created, param count: 31159658
+Data processing configuration for current model + dataset:
+	input_size: (3, 448, 448)
+	interpolation: bicubic
+	mean: (0.485, 0.456, 0.406)
+	std: (0.229, 0.224, 0.225)
+	crop_pct: 1.0
+	crop_mode: center
+Test: [   0/32]  Time: 2.440s (2.440s,  104.92/s)  Loss:  0.5854 (0.5854)  Acc@1:  90.625 ( 90.625)  Acc@5:  99.609 ( 99.609)
+Test: [  10/32]  Time: 0.590s (0.788s,  324.80/s)  Loss:  1.0110 (0.7002)  Acc@1:  73.438 ( 86.328)  Acc@5: 100.000 ( 99.254)
+Test: [  20/32]  Time: 0.592s (0.696s,  367.90/s)  Loss:  0.8483 (0.8116)  Acc@1:  86.328 ( 82.664)  Acc@5:  98.047 ( 99.163)
+Test: [  30/32]  Time: 0.571s (0.662s,  386.66/s)  Loss:  0.6092 (0.7875)  Acc@1:  91.797 ( 83.783)  Acc@5: 100.000 ( 99.194)
+ * Acc@1 83.900 (16.100) Acc@5 99.200 (0.800)
+Validating in float32. AMP not enabled.
+Loaded state_dict from checkpoint '/oscar/data/class/csci1430/students/apate206/CSCI1470_FINAL/output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar'
+Model mamba_vision_T created, param count: 31159658
+Data processing configuration for current model + dataset:
+	input_size: (3, 64, 64)
+	interpolation: bicubic
+	mean: (0.485, 0.456, 0.406)
+	std: (0.229, 0.224, 0.225)
+	crop_pct: 1.0
+	crop_mode: center
+Test: [   0/32]  Time: 0.993s (0.993s,  257.79/s)  Loss:  1.3191 (1.3191)  Acc@1:  62.109 ( 62.109)  Acc@5:  96.484 ( 96.484)
+Test: [  10/32]  Time: 0.100s (0.262s,  975.31/s)  Loss:  2.5923 (2.1987)  Acc@1:   8.594 ( 32.102)  Acc@5:  83.203 ( 79.616)
+Test: [  20/32]  Time: 0.099s (0.261s,  981.28/s)  Loss:  1.3915 (2.1020)  Acc@1:  55.859 ( 32.552)  Acc@5:  92.188 ( 83.836)
+Test: [  30/32]  Time: 0.098s (0.237s, 1082.13/s)  Loss:  1.2712 (1.9857)  Acc@1:  61.328 ( 36.870)  Acc@5:  91.797 ( 85.118)
+ * Acc@1 37.025 (62.975) Acc@5 85.175 (14.825)
+Validating in float32. AMP not enabled.
+Loaded state_dict from checkpoint '/oscar/data/class/csci1430/students/apate206/CSCI1470_FINAL/output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar'
+Model mamba_vision_T created, param count: 31159658
+Data processing configuration for current model + dataset:
+	input_size: (3, 512, 512)
+	interpolation: bicubic
+	mean: (0.485, 0.456, 0.406)
+	std: (0.229, 0.224, 0.225)
+	crop_pct: 1.0
+	crop_mode: center
+Test: [   0/32]  Time: 3.178s (3.178s,   80.57/s)  Loss:  0.6428 (0.6428)  Acc@1:  90.234 ( 90.234)  Acc@5:  99.609 ( 99.609)
+Test: [  10/32]  Time: 1.109s (1.296s,  197.48/s)  Loss:  1.1010 (0.7859)  Acc@1:  69.922 ( 84.517)  Acc@5:  99.609 ( 99.361)
+Test: [  20/32]  Time: 1.114s (1.208s,  211.88/s)  Loss:  0.9509 (0.9151)  Acc@1:  83.203 ( 80.413)  Acc@5:  97.266 ( 99.144)
+Test: [  30/32]  Time: 1.081s (1.176s,  217.62/s)  Loss:  0.6700 (0.8919)  Acc@1:  90.234 ( 81.590)  Acc@5: 100.000 ( 99.143)
+ * Acc@1 81.675 (18.325) Acc@5 99.150 (0.850)
