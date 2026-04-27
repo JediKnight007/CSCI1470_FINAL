@@ -77,17 +77,14 @@ if [ "$TASK" = "train" ]; then
         --workers 4 \
         --model-ema-decay 0.999 \
         --clip-grad 1.0 \
-
-        > slurm-$SLURM_JOB_ID.out 2>&1
+        --drop-path 0.2 \
+        --output "$SLURM_SUBMIT_DIR/output"
 elif [ "$TASK" = "validate" ]; then
     python MambaVision/validate.py \
         --config MambaVision/configs/mambavision_tiny_1k.yaml \
         --data_dir "$SLURM_SUBMIT_DIR/STL-10/imagefolder" \
         --num-classes 10 \
-        --tta 3 > slurm-$SLURM_JOB_ID.out 2>&1
-else
-    echo "Unknown task: $TASK"
-    exit 1
+        --tta 3
 fi
 
 echo "============================================"
