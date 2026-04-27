@@ -1,26 +1,3 @@
-## Check-in 2 Reflection
-
-### Introduction
-MambaVision is a recently proposed hybrid architecture that combines state space models (SSMs) with transformer-like components to improve the tradeoff between accuracy and efficiency. In particular, it introduces a mixer block that integrates an SSM branch for efficient sequence modeling and a symmetric non-SSM branch for global context aggregation.
-In this project, we perform a critical replication of MambaVision-T, focusing on verifying its claimed advantages over standard vision transformers. We evaluate both MambaVision-T and a ViT baseline on STL-10 and compare their performance in terms of accuracy and computational efficiency.
-Beyond standard evaluation, we design hypothesis-driven ablation studies to understand the contribution of the mixer block and conduct stress tests under challenging settings such as extreme aspect ratios, low-data regimes, and distribution shifts. Our goal is to examine not only whether MambaVision performs well, but also when its advantages hold and where they may break down.
-
-### Challenges
-1. **Fixing NaN Errors**: A major challenge was dealing with NaN errors caused by gradient explosion and numerical instability in the SSM components, where small errors accumulate to cause floating-point overflow. We had to carefully tune hyperparameters to stabilize the model.
-2. **Untangling the Mixer Block**: For ablation studies, we needed to isolate specific model components. The original "mixer block" splits data into an SSM branch and a non-SSM branch, squeezing both to half their size before merging. Safely isolating just the SSM piece without breaking the model's structural integrity or test fairness was our hardest coding task.
-
-### Insights
-Our results are highly promising and validate the original paper's claims. Our replicated MambaVision-T baseline achieved a Best Top-1 accuracy of 89.225%, vastly outperforming ViT-Tiny (71.31%) and ViT-Small (68.39%). Beyond baseline comparisons, our ablation studies yielded two concrete insights:
-  1. **Attention Placement Matters**: Moving self-attention to the first half of the network stages caused a 1.275% accuracy drop (to 87.95%), proving self-attention is most effective in the final layers to capture global context. Removing attention entirely caused a massive 3.85% drop. 
-  2. **The Bypass Branch is Crucial**: Removing the symmetric non-SSM branch resulted in a substantial 1.6% accuracy drop (to 87.625%), proving this parallel path is vital for making up for content lost in the SSM.
-
-### Plan
-- **On Track?**: We’re on track with our project. Now that we've confirmed the model's high accuracy, we need to show why it works so well by testing it with certain components turned off. We need to spend more time isolating the effects of the MambaVision token mixer (by testing the model without its specific State Space Model branch) and experimenting with the hybrid layout (to see how performance suffers when we remove the self-attention blocks from the model's final layers).
--	**Possible changes**: Based on the final data, we are adjusting our narrative focus. Initially, preliminary tests made us think the bypass branch had a negligible effect. However, our final results show the "no bypass" ablation actually caused a steeper penalty (-1.6%) than shifting the attention blocks (-1.275%). We will now change our conclusion to emphasize that MambaVision’s success relies just as heavily on its internal block redesign (the bypass branch) as it does on its macro layout (final-layer attention).
-
----
-
-
 # 🧋 Ube Macchiatos: MambaVision Replication Project
 
 ## Project Overview
