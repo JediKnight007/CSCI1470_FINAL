@@ -4,30 +4,6 @@
 This project is a critical replication and analysis of MambaVision, the first hybrid Mamba-Transformer vision backbone. We focus on the MambaVision-T (Tiny) variant, aiming to verify its accuracy and efficiency claims, and to perform hypothesis-driven ablations on its hybrid mixer block. We compare it against transformer baselines (e.g., DeiT-Tiny / ViT-Tiny) and evaluate on the STL-10 dataset.
 
 ---
-## Hypotheses (Pre-Registered at Check-in #2)
-
-> **H1: Symmetric bypass is the largest contributor to the MambaVision mixer.**
-> Removing the non-SSM bypass branch of the mixer will
-> hurt top-1 accuracy by **at least 2%** on STL-10 — *more* than on
-> ImageNet, because small datasets benefit more from the local features
-> the bypass preserves.
->
-> **H2: Self-attention placement matters more than its mere existence.**
-> Moving attention from the last N/2 layers to the first N/2 will hurt
-> performance, but *removing* attention entirely will hurt *less* than
-> bad placement, because at low resolution global mixing is
-> approximately replaceable by extra MambaVision mixers.
-
-## Claims Verified (Component A)
-
-| # | Claim from paper | Our verdict on STL-10 |
-|---|---|---|
-| 1 | MambaVision-T outperforms same-budget ViT (Fig. 1) | ✅ Holds, **gap is larger** on small data (+18% vs ViT-Tiny) |
-| 2 | Symmetric bypass + concat gives ≈ +1.0% (Tab. 4) | ✅ Direction holds, magnitude **−1.60%** (close to paper's −1.4%) |
-
-
----
-
 ## Results Summary
 
 All runs use MambaVision-T trained from scratch on STL-10 on Brown University's OSCAR cluster (NVIDIA RTX 3090).
@@ -54,14 +30,6 @@ All runs use MambaVision-T trained from scratch on STL-10 on Brown University's 
 |                                 |         |             |       |                       |
 | ViT-Tiny *(separate baseline)*  | 5.7M    | 71.310%     | 350   | -17.915% *(ref only)* |
 | ViT-Small *(separate baseline)* | 22M     | 68.390%     | 298   | -20.835% *(ref only)* |
-
-> **Note on ViT-Small underperforming ViT-Tiny:** ViT-Small (22M params,
-> 4× larger) achieves *lower* accuracy than ViT-Tiny (5.7M) on STL-10.
-> This is consistent with overfitting on a 25k-image training set —
-> ViTs are notoriously data-hungry, and ViT-Small does not have the
-> inductive biases that let MambaVision-T's CNN+SSM stages exploit the
-> small dataset effectively. This is itself a useful piece of evidence
-> for *why* hybrid architectures matter at small data scale.
 ---
 
 ## ViT Baseline: Data Preparation & Fair Comparison
@@ -97,6 +65,13 @@ the data pipeline as follows:
 > train directory and rerun the augmentation script to avoid duplicates.
 ---
 
+### Stress Test Summary
+
+- **Resolution shift:** Evaluated resolutions from 64×64 to 512×512 after training only on 224×224 images. This creates a true distribution shift; 64×64 dropped to **37% accuracy**.
+
+- **Gaussian noise:** Tested an edge case not covered by the original paper. MambaVision retained **82.763% accuracy** at noise std = 0.30, suggesting moderate noise robustness.
+
+---
 ## Directory Structure
 
 ```
@@ -272,7 +247,7 @@ Large datasets are not tracked in this repository. STL-10 is downloaded automati
 
 | Check-in | Link |
 |----------|------|
-| Check-in 2 | [checkins/checkin2.md](checkins/checkin2.md) |
+| [Check-in 2](checkins/Summary%20File)|
 
 ---
 
