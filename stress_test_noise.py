@@ -38,7 +38,7 @@ def load_model(checkpoint_path, num_classes=10):
     print(f"Loading checkpoint: {checkpoint_path}")
     model = mamba_vision_T(num_classes=num_classes)
 
-    checkpoint = torch.load(checkpoint_path, map_location='cpu')
+    checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
     if 'state_dict' in checkpoint:
         state_dict = checkpoint['state_dict']
     elif 'model' in checkpoint:
