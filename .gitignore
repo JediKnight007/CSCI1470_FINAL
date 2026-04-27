@@ -8,3 +8,4 @@ data/
 STL-10/
 */log_dir/
 checkins/*.save
+.DS_Store/
