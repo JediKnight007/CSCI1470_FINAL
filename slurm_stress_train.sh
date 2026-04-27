@@ -1,3 +1,39 @@
+#!/bin/bash
+#SBATCH -p gpu
+#SBATCH --gres=gpu:1
+#SBATCH -n 4
+#SBATCH --mem=16G
+#SBATCH -t 02:00:00
+#SBATCH -J stress_test
+#SBATCH -o slurm-%j.out
+#SBATCH -e slurm-%j.err
+
+echo "============================================"
+echo "Job ID:    $SLURM_JOB_ID"
+echo "Node:      $(hostname)"
+echo "Started:   $(date)"
+echo "GPU: $(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo 'none')"
+echo "============================================"
+
+cd "$SLURM_SUBMIT_DIR"
+
+VENV_DIR=~/envs/cs1470
+PYTHON_MODULE=python/3.11.11-5e66
+CUDA_MODULE=cuda/12.9.0-cinr
+
+module load "$PYTHON_MODULE" "$CUDA_MODULE"
+module load cudnn 2>/dev/null || true
+source "$VENV_DIR/bin/activate"
+export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
+
+CHECKPOINT="$SLURM_SUBMIT_DIR/output/20260427-094600-mamba_vision_T-224/checkpoint-225.pth.tar"
+DATA="$SLURM_SUBMIT_DIR/STL-10/imagefolder"
+
+echo "============================================"
+echo "STRESS TEST: MambaVision-T"
+echo "Checkpoint: $CHECKPOINT"
+echo "============================================"
+
 echo "--- Baseline: 224x224 ---"
 python MambaVision/validate.py \
     --model mamba_vision_T \
@@ -45,3 +81,7 @@ python MambaVision/validate.py \
     --num-classes 10 \
     --img-size 512 \
     "$DATA/val"
+
+echo "============================================"
+echo "Finished:  $(date)"
+echo "============================================"
