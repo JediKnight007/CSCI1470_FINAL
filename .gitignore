@@ -6,6 +6,7 @@ results/
 *.pth
 data/
 STL-10/
+cifar-10-batches-py/
 */log_dir/
 checkins/*.save
 .DS_Store
