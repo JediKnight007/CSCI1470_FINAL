@@ -15,11 +15,20 @@ import pickle
 import numpy as np
 from PIL import Image
 
+try:
+    from torchvision.datasets import CIFAR10
+except ImportError:
+    CIFAR10 = None
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 
 
 def resolve_cifar10_dir():
+    env_path = os.environ.get("CIFAR10_DIR")
+    if env_path and os.path.isdir(env_path):
+        return os.path.abspath(env_path)
+
     candidates = [
         os.path.join(REPO_ROOT, "cifar-10-batches-py"),
         os.path.join(os.getcwd(), "cifar-10-batches-py"),
@@ -28,8 +37,32 @@ def resolve_cifar10_dir():
     for path in candidates:
         if os.path.isdir(path):
             return path
+
+    # Fallback: search under repo root in case dataset was moved.
+    for root, dirs, _ in os.walk(REPO_ROOT):
+        if os.path.basename(root) == "cifar-10-batches-py":
+            return root
+        if "cifar-10-batches-py" in dirs:
+            return os.path.join(root, "cifar-10-batches-py")
+
+    # Last resort: try downloading with torchvision.
+    if CIFAR10 is None:
+        raise FileNotFoundError(
+            "Could not find 'cifar-10-batches-py' and torchvision is unavailable for auto-download. "
+            "Set CIFAR10_DIR to the dataset path. Looked in:\n  " + "\n  ".join(candidates)
+        )
+
+    print("cifar-10-batches-py not found. Downloading CIFAR-10 with torchvision...")
+    CIFAR10(root=REPO_ROOT, train=True, download=True)
+    CIFAR10(root=REPO_ROOT, train=False, download=True)
+
+    downloaded = os.path.join(REPO_ROOT, "cifar-10-batches-py")
+    if os.path.isdir(downloaded):
+        return downloaded
+
     raise FileNotFoundError(
-        "Could not find 'cifar-10-batches-py'. Looked in:\n  " + "\n  ".join(candidates)
+        "Could not find 'cifar-10-batches-py' after auto-download. "
+        "Set CIFAR10_DIR to the dataset path. Looked in:\n  " + "\n  ".join(candidates)
     )
 
 
@@ -63,7 +96,8 @@ def load_split(batch_files):
         all_data.append(d[b"data"])
         all_labels.extend(d[b"labels"])
     data = np.concatenate(all_data, axis=0)          # (N, 3072)
-    data = np.transpose(data.reshape(-1, 3, 32, 32), (0, 2, 3, 1))  # (N, 32, 32, 3)
+    data = data.reshape(-1, 3, 32, 32)
+    data = np.moveaxis(data, 1, -1)  # (N, 32, 32, 3)
     return data, all_labels
 
 
