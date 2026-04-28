@@ -15,8 +15,26 @@ import pickle
 import numpy as np
 from PIL import Image
 
-CIFAR10_DIR = "cifar-10-batches-py"
-OUT_DIR     = "cifar-10/imagefolder"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
+
+
+def resolve_cifar10_dir():
+    candidates = [
+        os.path.join(REPO_ROOT, "cifar-10-batches-py"),
+        os.path.join(os.getcwd(), "cifar-10-batches-py"),
+        os.path.join(SCRIPT_DIR, "cifar-10-batches-py"),
+    ]
+    for path in candidates:
+        if os.path.isdir(path):
+            return path
+    raise FileNotFoundError(
+        "Could not find 'cifar-10-batches-py'. Looked in:\n  " + "\n  ".join(candidates)
+    )
+
+
+CIFAR10_DIR = resolve_cifar10_dir()
+OUT_DIR = os.path.join(REPO_ROOT, "cifar-10", "imagefolder")
 
 CLASS_NAMES = [
     "airplane", "automobile", "bird", "cat", "deer",
@@ -39,12 +57,13 @@ def load_split(batch_files):
     all_data   = []
     all_labels = []
     for fname in batch_files:
-        d = unpickle(os.path.join(CIFAR10_DIR, fname))
+        batch_path = os.path.join(CIFAR10_DIR, fname)
+        d = unpickle(batch_path)
         # data is (N, 3072) uint8, labels is a list of ints
         all_data.append(d[b"data"])
         all_labels.extend(d[b"labels"])
     data = np.concatenate(all_data, axis=0)          # (N, 3072)
-    data = data.reshape(-1, 3, 32, 32).transpose(0, 2, 3, 1)  # (N, 32, 32, 3)
+    data = np.transpose(data.reshape(-1, 3, 32, 32), (0, 2, 3, 1))  # (N, 32, 32, 3)
     return data, all_labels
 
 
@@ -89,6 +108,8 @@ def save_split(images, labels, split, augment_train=False):
 
 
 print("Converting CIFAR-10 to ImageFolder format...")
+print(f"Using source: {CIFAR10_DIR}")
+print(f"Saving to:   {OUT_DIR}")
 
 print("Processing train split (5x augmentation → 250,000 images)...")
 train_images, train_labels = load_split(TRAIN_BATCHES)
