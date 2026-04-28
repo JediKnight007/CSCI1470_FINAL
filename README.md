@@ -245,9 +245,9 @@ Large datasets are not tracked in this repository. STL-10 is downloaded automati
 
 ## Course Check-ins
 
-| Check-in | 
+| Check-in |
 |----------|
-| [Check-in 2](checkins/Summary%20File)|
+| [Check-in 2](checkins/Summary%20File.pdf) |
 
 ---
 
