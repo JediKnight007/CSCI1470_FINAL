@@ -75,38 +75,66 @@ the data pipeline as follows:
 ## Directory Structure
 
 ```
+## Directory Structure
 
+```text
 CSCI1470_FINAL/
-├── checkins/                          # Check-in writeups
-│   └── checkin2.md                    # Check-in 2 reflection
-├── MambaVision/                       # MambaVision baseline (official repo)
-│   ├── train.py                       # Main training script
-│   ├── validate.py                    # Validation script
-│   ├── configs/                       # YAML configs per model variant
-│   └── models/mamba_vision.py
-├── Mambavision_Ablation_1/            # Ablation: no bypass branch
-│   └── models/mamba_vision.py
-├── Mambavision_Ablation_2/            # Ablation: first-half attention
-│   └── models/mamba_vision.py
-├── Mambavision_Ablation_3/            # Ablation: no attention (SSM-only)
-│   └── models/mamba_vision.py
-├── ViT/                               # ViT baseline
-├── STL-10/                            # Dataset (not tracked in git)
-│   ├── stl10_binary/                  # Raw binary files from download
-│   └── imagefolder/                   # Converted ImageFolder structure (generated)
-├── output/                            # Training checkpoints and logs (not tracked in git)
-├── slurm-runs/                        # Archived slurm output files
-├── download_stl10.py                  # Downloads STL-10 from Stanford
-├── prepare_stl10_imagefolder.py       # Converts STL-10 to ImageFolder + augmentation
-├── setup_env.sh                       # One-time environment setup (run on login node)
-├── slurm_train.sh                     # Main MambaVision training job
-├── slurm_train_ablation1.sh           # Ablation 1 training job
-├── slurm_train_ablation2.sh           # Ablation 2 training job
-├── slurm_train_ablation3.sh           # Ablation 3 training job
-├── slurm_train_vit.sh                 # ViT baseline training job
-└── README.md
-
-```
+├── README.md
+├── .gitignore
+├── .gitattributes
+│
+├── MambaVision/                         # Main MambaVision implementation
+│   ├── train.py                         # Main training script
+│   ├── validate.py                      # Validation script
+│   ├── configs/                         # Model configuration files
+│   ├── models/                          # Model definitions
+│   ├── mambavision/                     # MambaVision package code
+│   ├── scheduler/                       # Learning rate scheduler code
+│   └── utils/                           # Dataset, logging, and helper utilities
+│
+├── Mambavision_Ablation_1/              # Ablation 1: remove bypass branch
+├── Mambavision_Ablation_2/              # Ablation 2: first-half attention variant
+├── Mambavision_Ablation_3/              # Ablation 3: no-attention / SSM-only variant
+│
+├── ViT/                                 # Vision Transformer baseline code
+│   ├── train_vit_baseline.py
+│   ├── vit_tiny.sh
+│   ├── vit_small.sh
+│   └── vit_base.sh
+│
+├── Python Files/                        # Data preparation scripts
+│   ├── download_stl10.py
+│   └── prepare_stl10_imagefolder.py
+│
+├── Shell Scripts/                       # OSCAR / SLURM running scripts
+│   ├── setup_env.sh
+│   ├── slurm_train.sh
+│   ├── slurm_train_vit.sh
+│   ├── slurm_train_ablation1.sh
+│   ├── slurm_train_ablation2.sh
+│   ├── slurm_train_ablation3.sh
+│   ├── slurm_stress_train.sh
+│   └── slurm_noise_stress_test.sh
+│
+├── Runs/                                # Saved final run logs and outputs
+│   ├── Max Mamba Run/
+│   ├── Max ViTTiny Run/
+│   ├── Old Full Mamba Run/
+│   └── ViT Small Run/
+│
+├── Ablations/                           # Ablation experiment outputs
+│   ├── Ablation 1 - No Bypass/
+│   ├── Ablation 1 - No Bypass First/
+│   ├── Ablation 1 - No Bypass Run/
+│   ├── Ablation 2 - First-Half Attn (err)/
+│   └── Ablation 3 - No Attn (err)/
+│
+├── Stress Test/                         # Stress test results
+│   ├── Gaussian noise/
+│   └── Resolution shift/
+│
+└── checkins/                            # Project check-in writeups
+    └── Summary File
 
 ---
 
@@ -247,7 +275,7 @@ Large datasets are not tracked in this repository. STL-10 is downloaded automati
 
 | Check-in |
 |----------|
-| [Check-in 2](checkins/Summary%20File.pdf) |
+| [Check-in 2](checkins/Summary%20File) |
 
 ---
 
