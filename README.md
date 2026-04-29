@@ -74,7 +74,7 @@ the data pipeline as follows:
 ---
 ## Directory Structure
 
-
+```text
 CSCI1470_FINAL/
 ├── README.md
 ├── .gitignore
@@ -132,7 +132,7 @@ CSCI1470_FINAL/
 │
 └── checkins/                            # Project check-in writeups
     └── Summary File
-
+```
 ---
 
 ## Setup & Running on OSCAR (Brown University HPC)
