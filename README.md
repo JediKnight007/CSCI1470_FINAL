@@ -74,10 +74,7 @@ the data pipeline as follows:
 ---
 ## Directory Structure
 
-```
-## Directory Structure
 
-```text
 CSCI1470_FINAL/
 ├── README.md
 ├── .gitignore
