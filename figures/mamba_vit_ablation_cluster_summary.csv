@@ -1,0 +1,7 @@
+Model,Metric,Params,Best Top-1,Best Epoch,Last Top-1,Last Epoch,Delta vs MambaVision-T full
+MambaVision-T full,EMA,31.8M,89.225%,290,89.225%,290,—
+No bypass,EMA,~31.8M,87.713%,276,87.625%,280,-1.512%
+First-half attn,EMA,31.8M,87.950%,270,87.950%,270,-1.275%
+No attn,EMA,31.8M,85.375%,259,85.375%,259,-3.850%
+ViT-Small,Val,—,68.390%,289,66.840%,298,-20.835%
+ViT-Tiny,Val,—,71.000%,326,70.460%,350,-18.225%
